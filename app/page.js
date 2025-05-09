@@ -492,7 +492,7 @@ const colorMap = {
           {/* Dropdown on hover */}
           <div className="absolute mt-2 w-48 bg-white text-black rounded-lg shadow-md p-4 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
             <a
-              href="https://www.linkedin.com/in/your-link"
+              href="https://www.linkedin.com/in/divij-v-shah"
               target="_blank"
               rel="noopener noreferrer"
               className="block hover:underline"
@@ -500,7 +500,7 @@ const colorMap = {
               LinkedIn
             </a>
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:divij4901@gmail.com"
               className="block hover:underline"
             >
               Email
