@@ -29,25 +29,25 @@ useEffect(() => {
       title: 'Realty- Enterprise Resource Planner App',
       tech: ['ASP.NET', 'C#', 'SQLite'],
       desc: 'MVC-based API for property and client scheduling. Integrated real-time validation to improve operations.',
-      link: '#'
+      link: 'https://github.com/DivijShah'
     },
     {
       title: 'Interactive Study Course Book',
       tech: ['Python', 'MySQL', 'PostgreSQL'],
       desc: 'Built an E-textbook platform with relational schema and integrated user roles and assessments.',
-      link: '#'
+      link: 'https://github.com/DivijShah/interactive-study-book'
     },
     {
       title: 'Story of the Game (Analysis and Prediction)',
       tech: ['R', 'Hadoop', 'Spark'],
       desc: 'Live game stats analyzer for soccer. Used R and Spark to compute advanced stats with 94% accuracy.',
-      link: '#'
+      link: 'https://github.com/DivijShah/story-of-the-game-using-R'
     },
     {
       title: 'Drowsi-Sense using Computer Vision',
       tech: ['Python', 'TensorFlow', 'OpenCV'],
       desc: 'CNN-based computer vision system for drowsiness detection. Trained on 50k+ images with 97% accuracy.',
-      link: '#'
+      link: 'https://github.com/DivijShah/drowsi-sence'
     }
   ];
 
@@ -92,19 +92,19 @@ const colorMap = {
 }`}>
 
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        <nav className="flex space-x-6 text-base md:text-lg font-medium text-white">
-            <a href="#home" className="hover:text-blue-400">Home</a>
-            <a href="#experience" className="hover:text-blue-400">Experience</a>
-            <a href="#projects" className="hover:text-blue-400">Projects</a>
-            <a href="#education" className="hover:text-blue-400">Education</a>
-            <a href="#education" className="hover:text-blue-400">Tech. stack</a>
-            <a href="#more" className="hover:text-blue-400"> More about me</a>
-            
-            
-            
-          </nav>
+<div className="overflow-x-auto max-w-full">
+  <nav className="flex space-x-6 text-base md:text-lg font-medium text-white">
+    <a href="#home" className="hover:text-blue-400">Home</a>
+    <a href="#experience" className="hover:text-blue-400">Experience</a>
+    <a href="#projects" className="hover:text-blue-400">Projects</a>
+    <a href="#education" className="hover:text-blue-400">Education</a>
+    <a href="#education" className="hover:text-blue-400">Tech. stack</a>
+    <a href="#more" className="hover:text-blue-400">More about me</a>
+  </nav>
+</div>
+
           <div className="flex space-x-4">
-            <a href="https://linkedin.com/in/divij-v-shah" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400">
+            <a href="https://linkedin.com/in/divijvshah" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8.5h4v12h-4v-12zM8.5 8.5h3.5v1.71h.05c.49-.93 1.7-1.91 3.5-1.91 3.74 0 4.5 2.46 4.5 5.67v6.53h-4v-5.79c0-1.38-.02-3.15-1.92-3.15-1.92 0-2.22 1.5-2.22 3.05v5.89h-4v-12z" />
               </svg>
@@ -181,7 +181,7 @@ const colorMap = {
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-white"></div>
     </div>
 
-    <div className="flex justify-between relative z-10">
+   <div className="flex justify-start md:justify-between gap-6 md:gap-0 overflow-x-auto px-2 scroll-smooth snap-x relative z-10">
       {[
         {
           role: "Data Science Intern",
@@ -236,7 +236,7 @@ const colorMap = {
           tech: "PostgreSQL, Power BI, Excel, JavaScript, FusionGO",
         },
       ].map((item, index) => (
-        <div key={index} className="relative flex flex-col items-center w-1/4">
+        <div key={index} className="relative flex-shrink-0 flex flex-col items-center w-[260px] snap-start">
           <div className={`${item.side === 'top' ? 'mb-6' : 'mt-6'} w-[260px]`}>
             <div
               className="relative group bg-cover bg-center border border-white/10 rounded-xl shadow-md h-[260px] overflow-hidden transition-transform duration-300 hover:scale-105"
@@ -298,9 +298,9 @@ const colorMap = {
   <div className="relative z-10 w-full px-6">
     <h2 className="text-4xl font-bold text-white mb-12 text-center">Projects</h2>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {projects.map((project, idx) => (
-        <div key={idx} className="relative group perspective h-64">
+        <div key={idx} className="relative group perspective w-full h-64">
           <div className="relative w-full h-full transition-transform duration-[600ms] ease-[cubic-bezier(0.55,0.055,0.675,0.19)] transform-style preserve-3d group-hover:rotate-x-180">
 
             {/* Front Side */}
@@ -492,7 +492,7 @@ const colorMap = {
           {/* Dropdown on hover */}
           <div className="absolute mt-2 w-48 bg-white text-black rounded-lg shadow-md p-4 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
             <a
-              href="https://www.linkedin.com/in/divij-v-shah"
+              href="https://www.linkedin.com/in/divijvshah/"
               target="_blank"
               rel="noopener noreferrer"
               className="block hover:underline"
