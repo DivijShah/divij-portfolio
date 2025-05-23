@@ -119,18 +119,6 @@ const colorMap = {
         </div>
       </header>
       <section id="home" className="relative w-full h-screen">
-  <video
-    autoPlay
-    loop
-    muted
-    playsInline
-    className="absolute inset-0 w-full h-full object-cover"
-  >
-    <source src="/videos/hero.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-
-  <div className="absolute inset-0 bg-black/50 z-[1]" />
 
   <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center text-white">
     <h1 className="text-6xl font-bold mb-6">Hi, I’m Divij Shah</h1>
@@ -155,7 +143,7 @@ const colorMap = {
       />
     </div>
 
-    {/* ✅ Moved About Me content here */}
+    {/* Intro Line */}
     <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-full px-4 text-center z-10">
   <h6 className="text-lg md:text-xl font-semibold text-white max-w-2xl mx-auto">
     Data-focused software engineer passionate about building scalable systems and extracting insight from complex sports and ML data.
@@ -163,18 +151,18 @@ const colorMap = {
 </div>
   </div>
 </section>
-<section id="experience" 
-  className="w-full pt-12 pb-24 text-white relative"
-  style={{
+<section id="experience" className="w-full pt-12 pb-24 text-white relative z-10">
+
+  {/*style={{
     backgroundImage: "url('/images/bg-section1.jpg')",
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   }}
->
-  <div className="absolute inset-0 bg-black/75 backdrop-blur-sm z-0" />
+
+  <div className="absolute inset-0 bg-black/75 backdrop-blur-sm z-0" />*/}
 
   <div className="relative max-w-7xl mx-auto px-6">
-    <h2 className="text-4xl font-bold text-center mb-16">Work Experience</h2>
+    <h2 className="text-5xl font-bold text-center mb-16">Work Experience</h2>
 
     {/* Timeline with arrow */}
     <div className="absolute top-1/2 left-0 w-full h-1 bg-white/30 z-0">
@@ -283,20 +271,16 @@ const colorMap = {
   </div>
 </section>
 
-<section
-  id="projects"
-  className="w-full py-24 text-white relative"
-  style={{
+<section id="projects" className="w-full pt-12 pb-24 text-white relative z-10">
+  {/*style={{
     backgroundImage: "url('/images/bg-section2.jpg')",
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   }}
->
-  {/* Darker overlay with light blur */}
-  <div className="absolute inset-0 bg-black/85 backdrop-blur-sm z-0" />
+  <div className="absolute inset-0 bg-black/85 backdrop-blur-sm z-0" /> */}
 
   <div className="relative z-10 w-full px-6">
-    <h2 className="text-4xl font-bold text-white mb-12 text-center">Projects</h2>
+    <h2 className="text-5xl font-bold text-white mb-12 text-center">Projects</h2>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {projects.map((project, idx) => (
@@ -353,23 +337,20 @@ const colorMap = {
   </section>
 
 
-      <main className="bg-[#0a192f] text-white">
-      <section
-  id="education"
-  className="w-full pt-12 pb-24 text-white relative"
-  style={{
+      <main className=" text-white">
+      <section id="education" className="w-full pt-12 pb-24 text-white relative z-10">
+  {/*style={{
     backgroundImage: "url('/images/ncsu1.jpg')",
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   }}
->
-  <div className="absolute inset-0 bg-black/85 backdrop-blur-sm z-0" />
+  <div className="absolute inset-0 bg-black/85 backdrop-blur-sm z-0" /> */}
 
   <div className="relative z-10 max-w-[90rem] mx-auto px-6 grid md:grid-cols-[1fr_320px] gap-15 items-start">
     
-    {/* Left: Full-width About Me content */}
+    {/* Left: Education */}
     <div className="text-left space-y-4 -mt-4">
-      <h2 className="text-4xl font-bold text-white leading-snug"> Education </h2>
+      <h2 className="text-5xl font-bold text-white leading-snug"> Education </h2>
       <div className="flex flex-wrap justify-start items-start gap-10 mt-10">
       <p className="text-lg text-white-700 leading-relaxed"> I hold a <span className="font-bold">Master’s in Computer Science with a concentration in Data Science</span> from North Carolina State University, where I completed coursework in <span className="font-bold">Software Engineering, Neural Networks and Deep Learning, Cloud Computing, and Statistics</span> with a GPA of <span className="font-semibold">3.4/4.0</span>. Prior to that, I earned a <span className="font-bold">Bachelor of Technology in Computer Engineering</span> from Pandit Deendayal Energy University, India, graduating with a GPA of <span className="font-semibold">8.97/10</span>. My undergraduate studies emphasized <span className="font-bold">Data Structures, Database Management Systems, and Object-Oriented Programming</span>. </p>
  </div>
@@ -380,7 +361,7 @@ const colorMap = {
       <div className="relative w-full h-full transition-transform duration-700 transform-style preserve-3d group-hover:rotate-y-180">
 
         {/* Front Side */}
-        <div className="absolute w-80 h-60 inset-0 bg-black/80 rounded-xl shadow-lg p-6 backface-hidden flex justify-center border border-cyan-200 items-center relative overflow-visible">
+        <div className="absolute w-80 h-60 inset-0 bg-black/60 rounded-xl shadow-lg p-6 backface-hidden flex justify-center border border-cyan-200 items-center relative overflow-visible">
           {/* Cyan background pills */}
           {['SQL', 'Keras', 'Tableau', 'SciPy', 'JavaScript'].map((tech, idx) => (
             <span
@@ -401,7 +382,7 @@ const colorMap = {
         </div>
 
         {/* Back Side */}
-        <div className="absolute inset-0 bg-black/80 rounded-xl shadow-xl p-6 rotate-y-180 backface-hidden flex flex-col justify-center">
+        <div className="absolute inset-0 bg-black/50 rounded-xl shadow-xl p-6 rotate-y-180 backface-hidden flex flex-col justify-center">
           <div className="grid grid-cols-3 gap-3">
             {[
               'Python', 'R', 'SQL', 'JavaScript', 'C#',
@@ -455,17 +436,13 @@ const colorMap = {
   </div>
 </section>
 
-<section
-  id="more"
-  className="w-full py-24 text-white relative"
-  style={{
+<section id="more" className="w-full pt-12 pb-24 text-white relative z-10" >
+  {/*style={{
     backgroundImage: "url('/images/bg-section2.jpg')",
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   }}
->
-  {/* Darker overlay with light blur */}
-  <div className="absolute inset-0 bg-black/85 backdrop-blur-sm z-0" />
+  <div className="" /> */}
 
   {/* Content container (elevated above overlay) */}
   <div className="relative z-10 px-6">
@@ -473,8 +450,8 @@ const colorMap = {
       
       {/* Column 1: More About Me */}
       <div className="space-y-4">
-        <h2 className="text-4xl font-bold mb-2">More About Me</h2>
-        <p className="text-base leading-relaxed text-white/80">
+        <h2 className="text-5xl font-bold mb-2">More About Me</h2>
+        <p className="text-base font-semibold leading-relaxed text-white/80">
           I’m passionate about football⚽—both on the field and as a dedicated fan. 
           I’ve always loved swimming—so much so that I became a certified lifeguard, combining passion with responsibility.
           <br /><br />
@@ -515,7 +492,7 @@ const colorMap = {
     <img
       src="/images/ed.JPG"
       alt="Graduation"
-      className="w-full h-full object-contain rounded-xl"
+      className="w-full h-full object-contain"
     />
   </div>
 </div>
