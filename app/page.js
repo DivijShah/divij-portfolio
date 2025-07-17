@@ -3,6 +3,7 @@
 import { Typewriter } from 'react-simple-typewriter';
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Subtitles } from 'lucide-react';
+import Image from 'next/image';
 
 
 export default function Home() {
@@ -167,7 +168,7 @@ const colorMap = {
     </div>
 
     <div className="mt-6">
-      <img
+      <image
         src="/images/profile.JPG"
         alt="Divij Shah"
         className="w-40 h-40 rounded-full object-cover border-2 border-white shadow-lg"
@@ -312,7 +313,7 @@ const colorMap = {
 
     {/* Project carousel */}
     <div className="group relative w-full max-w-md md:max-w-lg lg:max-w-xl aspect-video bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
-      <img
+      <image
         src={projects[current].image}
         alt={projects[current].title}
         className="absolute inset-0 w-full h-full object-cover opacity-20"
@@ -382,19 +383,19 @@ const colorMap = {
       {/* Left: Logos side by side with equal spacing */}
       <div className="flex flex-row justify-center items-center gap-25">
         <div className="w-75 h-50">
-          <img
+          <image
             src="/images/ncsu.png"
             alt="North Carolina State University"
             className="w-75 h-50 object-contain transition-transform duration-300 hover:scale-105"
           />
           <p className="text-center text-lg text-white/100 mt-2 leading-snug">
             North Carolina State Univeristy <br />
-            Master's in Computer Science; Concentration : Data Science <br />
+            Master&apos;s in Computer Science; Concentration : Data Science <br />
             GPA: 3.4
           </p>
         </div>
         <div className="w-75 h-50">
-          <img
+          <image
             src="/images/pdeu.png"
             alt="Pandit Deendayal Energy University"
             className="w-75 h-50 object-contain transition-transform duration-300 hover:scale-105"
@@ -541,7 +542,7 @@ const colorMap = {
 {/* Column 3: Graduation Picture */}
 <div className="flex justify-center md:justify-end">
   <div className="w-72 h-72 bg-white/10 rounded-2xl shadow-lg border border-white/10 flex items-center justify-center">
-    <img
+    <image
       src="/images/ed.JPG"
       alt="Graduation"
       className="w-full h-full object-contain"
