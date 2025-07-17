@@ -4,7 +4,7 @@ import { Typewriter } from 'react-simple-typewriter';
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Subtitles } from 'lucide-react';
 import Image from 'next/image';
-
+import { Analytics } from "@vercel/analytics/next"
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
