@@ -2,10 +2,13 @@
 
 import { Typewriter } from 'react-simple-typewriter';
 import { useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight, Subtitles } from 'lucide-react';
 
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [current, setCurrent] = useState(0);  // <-- Add this line
+
 
 useEffect(() => {
   const handleScroll = () => {
@@ -26,28 +29,47 @@ useEffect(() => {
 
   const projects = [
     {
+      
+      title: 'Multi-modal AI Assistant using LangChain',
+      tech: ['Python', 'LangChain', 'GPT-4 API', 'FastAPI', 'Docker', 'AWS'],
+      desc: 'Currently I am working on developing an intelligent personal assistant integrating GPT-4 and LangChain for context-aware interactions and capable of retrieving information',
+      link: 'https://github.com/DivijShah',
+      image: 'images/AI.jpeg'
+    },
+    {
       title: 'Realty- Enterprise Resource Planner App',
       tech: ['ASP.NET', 'C#', 'SQLite'],
-      desc: 'MVC-based API for property and client scheduling. Integrated real-time validation to improve operations.',
-      link: 'https://github.com/DivijShah'
+      desc: 'Developed a modular API for property scheduling and assignment. Integrated validation, authentication, and data storage; tested with Postman for load handling and endpoint stability.',
+      link: 'https://github.com/DivijShah',
+      image: 'images/realestate.png'
     },
     {
       title: 'Interactive Study Course Book',
       tech: ['Python', 'MySQL', 'PostgreSQL'],
-      desc: 'Built an E-textbook platform with relational schema and integrated user roles and assessments.',
-      link: 'https://github.com/DivijShah/interactive-study-book'
+      desc: 'Built a backend system with MySQL for managing courses, users, and assessments in a digital textbook platform. Designed normalized schema and implemented dynamic role logic for teachers, students, and admins.',
+      link: 'https://github.com/DivijShah/interactive-study-book',
+      image: 'images/study.jpg'
     },
     {
       title: 'Story of the Game (Analysis and Prediction)',
       tech: ['R', 'Hadoop', 'Spark'],
-      desc: 'Live game stats analyzer for soccer. Used R and Spark to compute advanced stats with 94% accuracy.',
-      link: 'https://github.com/DivijShah/story-of-the-game-using-R'
+      desc: 'Live game stats analyzer for soccer. Used R and Spark to compute advanced stats with 94% accuracy. Added some stats for score prediction, scorer prediction and projected substitutions.',
+      link: 'https://github.com/DivijShah/story-of-the-game-using-R',
+      image: 'images/game.jpeg'
     },
     {
       title: 'Drowsi-Sense using Computer Vision',
       tech: ['Python', 'TensorFlow', 'OpenCV'],
-      desc: 'CNN-based computer vision system for drowsiness detection. Trained on 50k+ images with 97% accuracy.',
-      link: 'https://github.com/DivijShah/drowsi-sence'
+      desc: 'Developed a real-time drowsiness detection system using CNNs with 4 convolutional layers, batch normalization, dropout regularization, and softmax output, achieving 97% accuracy. Evaluated using precision, recall, and F1-score on 50K+ labeled image dataset.',
+      link: 'https://github.com/DivijShah/drowsi-sence',
+      image: 'images/drowsi.jpeg'
+    },
+     {
+      title: 'CarbonPredict using ML',
+      tech: ['Python', 'PySpark', 'Hadoop'],
+      desc: 'Built a big data model to predict 2022 CO2 emissions in countries like the USA, India, and China. Achieved 85% accuracy with Linear Regression and Random Forest algorithms.',
+      link: 'https://github.com/DivijShah/Predicting-CO2-emissions-using-ML-techniques',
+      image: 'images/co2.png'
     }
   ];
 
@@ -58,6 +80,7 @@ const colorMap = {
   'SQL': 'bg-blue-100 text-blue-900',
   'R': 'bg-blue-100 text-blue-900',
   'JavaScript': 'bg-blue-100 text-blue-900',
+  'Java': 'bg-blue-100 text-blue-900',
 
   // 💛 Libraries (Yellow)
   'TensorFlow': 'bg-yellow-100 text-yellow-900',
@@ -73,16 +96,24 @@ const colorMap = {
   'Excel': 'bg-green-100 text-green-900',
   'FusionGO': 'bg-green-100 text-green-900',
   'SSMS': 'bg-green-100 text-green-900',
+  'LangChain': 'bg-green-100 text-green-900',
+
 
   // 💖 Frameworks (Pink)
   '.NET': 'bg-pink-100 text-pink-800',
   'ASP.NET': 'bg-pink-100 text-pink-800',
+  'Docker': 'bg-pink-100 text-pink-800',
+  'FastAPI': 'bg-pink-100 text-pink-800',
+  'GPT-4 API': 'bg-pink-100 text-pink-800',
 
   // ⚪️ Databases (neutral gray as optional category)
   'SQLite': 'bg-gray-200 text-gray-800',
   'MySQL': 'bg-gray-200 text-gray-800',
-  'PostgreSQL': 'bg-gray-200 text-gray-800'
+  'PostgreSQL': 'bg-gray-200 text-gray-800',
+  'AWS': 'bg-gray-200 text-gray-800'
 };
+
+
 
 
   return (
@@ -146,7 +177,7 @@ const colorMap = {
     {/* Intro Line */}
     <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-full px-4 text-center z-10">
   <h6 className="text-lg md:text-xl font-semibold text-white max-w-2xl mx-auto">
-    Data-focused software engineer passionate about building scalable systems and extracting insight from complex sports and ML data.
+    Data-focused software engineer passionate about building scalable, AI-driven systems and extracting insight from complex sports and ML data to deliver intelligent solutions.
   </h6>
 </div>
   </div>
@@ -169,7 +200,7 @@ const colorMap = {
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-white"></div>
     </div>
 
-   <div className="flex justify-start md:justify-between gap-6 md:gap-0 overflow-x-auto px-2 scroll-smooth snap-x relative z-10">
+   <div className="flex justify-start md:justify-between gap-6 md:gap-0  snap-x relative z-10">
       {[
         {
           role: "Data Science Intern",
@@ -271,58 +302,179 @@ const colorMap = {
   </div>
 </section>
 
-<section id="projects" className="w-full pt-12 pb-24 text-white relative z-10">
-  {/*style={{
-    backgroundImage: "url('/images/bg-section2.jpg')",
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  }}
-  <div className="absolute inset-0 bg-black/85 backdrop-blur-sm z-0" /> */}
+<section id="projects" className="w-full pt-12 pb-24 text-white relative z-10" >
 
-  <div className="relative z-10 w-full px-6">
-    <h2 className="text-5xl font-bold text-white mb-12 text-center">Projects</h2>
+  {/* Removed backgroundImage + blur completely */}
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {projects.map((project, idx) => (
-        <div key={idx} className="relative group perspective w-full h-64">
-          <div className="relative w-full h-full transition-transform duration-[600ms] ease-[cubic-bezier(0.55,0.055,0.675,0.19)] transform-style preserve-3d group-hover:rotate-x-180">
+  {/* Content overlay */}
+  <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+    <h2 className="text-4xl md:text-5xl font-bold mb-8">Projects</h2>
 
-            {/* Front Side */}
-            <div className="absolute w-65 h-45 inset-0 bg-black/75 rounded-xl shadow-lg p-4 backface-hidden text-white border border-cyan-200 flex flex-col justify-center">
-              <h3 className="text-xl font-bold text-center mb-3">{project.title}</h3>
-              <div className="flex flex-wrap justify-center gap-2">
-                {project.tech.map((tech, i) => (
+    {/* Project carousel */}
+    <div className="group relative w-full max-w-md md:max-w-lg lg:max-w-xl aspect-video bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
+      <img
+        src={projects[current].image}
+        alt={projects[current].title}
+        className="absolute inset-0 w-full h-full object-cover opacity-20"
+      />
+
+      <div className="absolute inset-0 p-6 flex flex-col justify-center transition-opacity duration-500 group-hover:opacity-0">
+        <h3 className="text-3xl font-bold">{projects[current].title}</h3>
+        <div className="mt-2 flex flex-wrap justify-center gap-2">
+          {projects[current].tech.map((tech, i) => (
+            <span
+              key={i}
+              className={`text-xs px-2 py-1 rounded-full ${colorMap[tech] || 'bg-gray-100 text-gray-700'}`}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="absolute inset-0 p-6 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <p className="text-lg mb-4">{projects[current].desc}</p>
+        <a
+          href={projects[current].link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-cyan-300 underline"
+        >
+          View on GitHub
+        </a>
+      </div>
+    </div>
+
+    {/* Arrow buttons */}
+    <div className="flex items-center gap-6 mt-6">
+      <button
+        onClick={() =>
+          setCurrent((prev) => (prev - 1 + projects.length) % projects.length)
+        }
+        className="p-2 rounded-full bg-white/20 hover:bg-white/30"
+      >
+        <ChevronLeft />
+      </button>
+      <button
+        onClick={() =>
+          setCurrent((prev) => (prev + 1) % projects.length)
+        }
+        className="p-2 rounded-full bg-white/20 hover:bg-white/30"
+      >
+        <ChevronRight />
+      </button>
+    </div>
+  </div>
+</section>
+
+
+
+      <main className=" text-white">
+<section id="education" className="w-full pt-12 pb-24 text-white relative z-10" >
+  <div className="relative z-10 max-w-7xl mx-auto px-6">
+
+    {/* Title */}
+    <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">Education & Technical Proficiencies</h2>
+
+    {/* Centered grid */}
+    <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-16">
+
+      {/* Left: Logos side by side with equal spacing */}
+      <div className="flex flex-row justify-center items-center gap-25">
+        <div className="w-75 h-50">
+          <img
+            src="/images/ncsu.png"
+            alt="North Carolina State University"
+            className="w-75 h-50 object-contain transition-transform duration-300 hover:scale-105"
+          />
+          <p className="text-center text-lg text-white/100 mt-2 leading-snug">
+            North Carolina State Univeristy <br />
+            Master's in Computer Science; Concentration : Data Science <br />
+            GPA: 3.4
+          </p>
+        </div>
+        <div className="w-75 h-50">
+          <img
+            src="/images/pdeu.png"
+            alt="Pandit Deendayal Energy University"
+            className="w-75 h-50 object-contain transition-transform duration-300 hover:scale-105"
+          />
+          <p className="text-center text-lg text-white/100 mt-2 leading-snug">
+            Pandit Deendayal Energy University <br />
+            Bachelor of Technology <br /> in Computer Engineering <br />
+            GPA: 3.9
+          </p>
+        </div>
+      </div>
+
+      {/* Right: Tech stack card with double spacing */}
+      <div className="mt-8 md:mt-0 md:ml-20 relative group perspective w-[320px] min-h-[12rem]">
+        <div className="relative w-full h-full transition-transform duration-700 transform-style preserve-3d group-hover:rotate-y-180">
+
+          {/* Front Side */}
+          <div className="absolute w-80 h-60 inset-0 bg-black/60 rounded-xl shadow-lg p-6 backface-hidden flex justify-center border border-cyan-200 items-center relative overflow-visible">
+            {['SQL', 'Keras', 'Tableau', 'SciPy', 'JavaScript'].map((tech, idx) => (
+              <span
+                key={idx}
+                className="absolute text-xs px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-500 blur-[1.5px]"
+                style={{
+                  top: `${20 + idx * 10}%`,
+                  left: `${15 + idx * 12}%`,
+                  zIndex: 0
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+            <span className="text-xl font-bold text-gray-200 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center">
+              My Growing Tech. Stack ⏳
+            </span>
+          </div>
+
+          {/* Back Side */}
+          <div className="absolute inset-0 bg-black/50 rounded-xl shadow-xl p-6 rotate-y-180 backface-hidden flex flex-col justify-center">
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                'Python', 'R', 'SQL', 'JavaScript', 'C#', 'Java',
+                'TensorFlow', 'NumPy', 'SciPy', 'Keras', 'Tableau',
+                '.NET', 'Hadoop', 'AWS', 'GCP'
+              ].map((tech, idx) => {
+                const colorMap = {
+                  'Python': 'bg-blue-200 text-blue-800',
+                  'R': 'bg-blue-200 text-blue-800',
+                  'SQL': 'bg-blue-200 text-blue-800',
+                  'JavaScript': 'bg-blue-200 text-blue-800',
+                  'Java': 'bg-blue-200 text-blue-800',
+                  'C#': 'bg-blue-200 text-blue-800',
+                  'TensorFlow': 'bg-purple-200 text-purple-800',
+                  'NumPy': 'bg-purple-200 text-purple-800',
+                  'SciPy': 'bg-purple-200 text-purple-800',
+                  'Keras': 'bg-purple-200 text-purple-800',
+                  'Tableau': 'bg-yellow-100 text-yellow-700',
+                  '.NET': 'bg-yellow-100 text-yellow-700',
+                  'Hadoop': 'bg-yellow-100 text-yellow-700',
+                  'AWS': 'bg-green-200 text-green-800',
+                  'GCP': 'bg-green-200 text-green-800',
+                };
+                return (
                   <span
-                    key={i}
-                    className={`text-xs px-2 py-1 rounded-full ${colorMap[tech] || 'bg-gray-100 text-gray-700'}`}
+                    key={idx}
+                    className={`text-xs px-3 py-1 rounded-full text-center transition ${colorMap[tech]}`}
                   >
                     {tech}
                   </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Back Side */}
-            <div className="absolute w-65 h-45 inset-0 bg-white/80 text-black rounded-xl shadow-2xl p-4 rotate-x-180 backface-hidden flex flex-col justify-between border border-cyan-400">
-              <p className="text-sm leading-relaxed mb-4">{project.desc}</p>
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-700 text-sm underline"
-              >
-                View on GitHub
-              </a>
+                );
+              })}
             </div>
           </div>
         </div>
-      ))}
+      </div>
     </div>
   </div>
 
   <style jsx>{`
     .perspective {
-      perspective: 1200px;
+      perspective: 1000px;
     }
     .transform-style {
       transform-style: preserve-3d;
@@ -330,110 +482,10 @@ const colorMap = {
     .backface-hidden {
       backface-visibility: hidden;
     }
-    .rotate-x-180 {
-      transform: rotateX(180deg);
+    .rotate-y-180 {
+      transform: rotateY(180deg);
     }
   `}</style>
-  </section>
-
-
-      <main className=" text-white">
-      <section id="education" className="w-full pt-12 pb-24 text-white relative z-10">
-  {/*style={{
-    backgroundImage: "url('/images/ncsu1.jpg')",
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  }}
-  <div className="absolute inset-0 bg-black/85 backdrop-blur-sm z-0" /> */}
-
-  <div className="relative z-10 max-w-[90rem] mx-auto px-6 grid md:grid-cols-[1fr_320px] gap-15 items-start">
-    
-    {/* Left: Education */}
-    <div className="text-left space-y-4 -mt-4">
-      <h2 className="text-5xl font-bold text-white leading-snug"> Education </h2>
-      <div className="flex flex-wrap justify-start items-start gap-10 mt-10">
-      <p className="text-lg text-white-700 leading-relaxed"> I hold a <span className="font-bold">Master’s in Computer Science with a concentration in Data Science</span> from North Carolina State University, where I completed coursework in <span className="font-bold">Software Engineering, Neural Networks and Deep Learning, Cloud Computing, and Statistics</span> with a GPA of <span className="font-semibold">3.4/4.0</span>. Prior to that, I earned a <span className="font-bold">Bachelor of Technology in Computer Engineering</span> from Pandit Deendayal Energy University, India, graduating with a GPA of <span className="font-semibold">8.97/10</span>. My undergraduate studies emphasized <span className="font-bold">Data Structures, Database Management Systems, and Object-Oriented Programming</span>. </p>
- </div>
- </div>
-    {/* Right: Flip Tech Stack Card */}
-    
-    <div className="relative group perspective w-[320px] min-h-[12rem] ml-auto">
-      <div className="relative w-full h-full transition-transform duration-700 transform-style preserve-3d group-hover:rotate-y-180">
-
-        {/* Front Side */}
-        <div className="absolute w-80 h-60 inset-0 bg-black/60 rounded-xl shadow-lg p-6 backface-hidden flex justify-center border border-cyan-200 items-center relative overflow-visible">
-          {/* Cyan background pills */}
-          {['SQL', 'Keras', 'Tableau', 'SciPy', 'JavaScript'].map((tech, idx) => (
-            <span
-              key={idx}
-              className="absolute text-xs px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-500 blur-[1.5px]"
-              style={{
-                top: `${20 + idx * 10}%`,
-                left: `${15 + idx * 12}%`,
-                zIndex: 0
-              }}
-            >
-              {tech}
-            </span>
-          ))}
-          <span className="text-xl font-bold text-gray-200 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center">
-            My Growing Tech. Stack ⏳
-          </span>
-        </div>
-
-        {/* Back Side */}
-        <div className="absolute inset-0 bg-black/50 rounded-xl shadow-xl p-6 rotate-y-180 backface-hidden flex flex-col justify-center">
-          <div className="grid grid-cols-3 gap-3">
-            {[
-              'Python', 'R', 'SQL', 'JavaScript', 'C#',
-              'TensorFlow', 'NumPy', 'SciPy', 'Keras', 'Tableau',
-              '.NET', 'Hadoop', 'AWS', 'GCP'
-            ].map((tech, idx) => {
-              const colorMap = {
-                'Python': 'bg-blue-200 text-blue-800',
-                'R': 'bg-blue-200 text-blue-800',
-                'SQL': 'bg-blue-200 text-blue-800',
-                'JavaScript': 'bg-blue-200 text-blue-800',
-                'C#': 'bg-blue-200 text-blue-800',
-                'TensorFlow': 'bg-purple-200 text-purple-800',
-                'NumPy': 'bg-purple-200 text-purple-800',
-                'SciPy': 'bg-purple-200 text-purple-800',
-                'Keras': 'bg-purple-200 text-purple-800',
-                'Tableau': 'bg-yellow-100 text-yellow-700',
-                '.NET': 'bg-yellow-100 text-yellow-700',
-                'Hadoop': 'bg-yellow-100 text-yellow-700',
-                'AWS': 'bg-green-200 text-green-800',
-                'GCP': 'bg-green-200 text-green-800',
-              };
-              return (
-                <span
-                  key={idx}
-                  className={`text-xs px-3 py-1 rounded-full text-center transition ${colorMap[tech]}`}
-                >
-                  {tech}
-                </span>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      <style jsx>{`
-        .perspective {
-          perspective: 1000px;
-        }
-        .transform-style {
-          transform-style: preserve-3d;
-        }
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
-        .rotate-y-180 {
-          transform: rotateY(180deg);
-        }
-      `}</style>
-    </div>
-  </div>
 </section>
 
 <section id="more" className="w-full pt-12 pb-24 text-white relative z-10" >
