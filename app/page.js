@@ -537,9 +537,9 @@ const colorMap = {
       <div className="space-y-4">
         <h2 className="text-5xl font-bold mb-2">More About Me</h2>
         <p className="text-base font-semibold leading-relaxed text-white/80">
-          I tackle challenges with energy, optimism, and a healthy dose of curiosity — always looking for creative ways around roadblocks and thriving when problems get tricky. Critical thinking and persistence are my go-to tools. <br /> 
-          When I’m not solving problems, you’ll probably find me obsessing over Soccer ⚽, especially Manchester United! <br /> 
-          I also love to swim and once took that passion further by becoming a certified lifeguard, blending fun with responsibility. Whether on the field, in the pool, or writing code, I bring the same enthusiasm and drive to everything I do.
+          I tackle challenges with energy, optimism, and a healthy dose of curiosity, always looking for creative ways around roadblocks and thriving when problems get tricky. Critical thinking and persistence are my go-to tools. <br /> 
+          When I’m not solving problems, you’ll probably find me obsessing over Soccer, especially Manchester United! <br /> 
+          I also love to swim and once took that passion further by becoming a certified lifeguard, blending fun with responsibility. <br /> Whether on the field, in the pool, or writing code, I bring the same enthusiasm and drive to everything I do.
           </p>
       </div>
 
