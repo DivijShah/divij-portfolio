@@ -657,7 +657,7 @@ const colorMap = {
           
             
           
-              When I'm not solving problems, you'll probably find me obsessing over Soccer, especially Manchester United!
+                             When I&apos;m not solving problems, you&apos;ll probably find me obsessing over Soccer, especially Manchester United!
           
               I also love to swim and once took that passion further by becoming a certified lifeguard, blending fun with responsibility.
           
@@ -669,7 +669,7 @@ const colorMap = {
           <div className="flex justify-center pt-4">
             <div className="relative group">
               <button className="bg-white text-black font-semibold px-6 py-3 rounded-full flex items-center gap-2 hover:bg-gray-200 transition">
-                📨 Let's Get in Touch
+                📨 Let&apos;s Get in Touch
               </button>
               
               {/* Dropdown on hover */}
