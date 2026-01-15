@@ -31,10 +31,10 @@ useEffect(() => {
   const projects = [
     {
       
-      title: 'Multi-modal AI Assistant using LangChain',
-      tech: ['Python', 'LangChain', 'GPT-4 API', 'FastAPI', 'Docker', 'AWS'],
+      title: 'Multi-modal AI Assistant - Mock interviewer',
+      tech: ['Python', 'LangChain', 'GPT-4 API', 'TS', 'Node'],
       desc: 'Currently I am working on developing an intelligent personal assistant integrating GPT-4 and LangChain for context-aware interactions and capable of retrieving information',
-      link: 'https://github.com/DivijShah',
+      link: 'https://github.com/DivijShah/Jarvis-AI-Mock-Interviewer',
       image: '/images/AI.jpeg'
     },
     {
