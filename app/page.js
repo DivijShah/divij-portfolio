@@ -33,7 +33,7 @@ useEffect(() => {
       
       title: 'Multi-modal AI Assistant - Mock interviewer',
       tech: ['Python', 'LangChain', 'GPT-4 API', 'TS', 'Node'],
-      desc: 'Currently I am working on developing an intelligent personal assistant integrating GPT-4 and LangChain for context-aware interactions and capable of retrieving information',
+      desc: 'Currently I am working on developing an intelligent personal assistant integrating GPT-4o for context-aware interview prep and mock interviewer capability.',
       link: 'https://github.com/DivijShah/Jarvis-AI-Mock-Interviewer',
       image: '/images/AI.jpeg'
     },
