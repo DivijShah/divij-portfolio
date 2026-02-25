@@ -1,5 +1,5 @@
-import ReactApp from './react-app';
+import ReactAppClient from './react-app-client';
 
 export default function Page() {
-  return <ReactApp />;
+  return <ReactAppClient />;
 }
