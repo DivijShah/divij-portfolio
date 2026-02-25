@@ -3,17 +3,8 @@
 export default function BackgroundVideo() {
   return (
     <>
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="fixed top-0 left-0 w-full h-full object-cover -z-10"
-      >
-        <source src="/videos/hero.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div className="fixed top-0 left-0 w-full h-full bg-black/65 z-[-9]" />
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,#1A3FA3_0%,#0f172a_35%,#020617_100%)]" />
+      <div className="fixed inset-0 z-[-9] bg-black/65" />
     </>
   );
 }
