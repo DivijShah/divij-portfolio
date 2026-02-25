@@ -1,0 +1,1018 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { Typewriter } from 'react-simple-typewriter';
+import Image from 'next/image';
+
+const customStyles = {
+  root: {
+    '--bg': '#E5E7EB',
+    '--fg-primary': '#1A3FA3',
+    '--fg-secondary': '#555555',
+    '--fg-tertiary': '#888888',
+    '--border': '#e1e1e1',
+    '--border-strong': '#2563EB',
+  },
+  layoutContainer: {
+    display: 'grid',
+    gridTemplateColumns: '300px 1fr 335px',
+    minHeight: '100vh',
+  },
+  topRail: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '4px',
+    background: '#1A3FA3',
+    zIndex: 120,
+  },
+  colIdentity: {
+    position: 'sticky',
+    top: 0,
+    height: '100vh',
+    borderRight: '1px solid rgba(26, 63, 163, 0.18)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: '20px',
+    overflowY: 'auto',
+    backgroundColor: '#E5E7EB',
+    boxShadow: 'inset 0 -4px 0 #1A3FA3',
+  },
+  logoMark: {
+    width: '64px',
+    height: '64px',
+    background: '#1A3FA3',
+    color: '#E5E7EB',
+    borderRadius: '50%',
+    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontFamily: '"Playfair Display", "Times New Roman", serif',
+    fontSize: '22px',
+    marginBottom: '24px',
+  },
+  brandBlock: {
+    marginBottom: '48px',
+  },
+  engineerMeta: {
+    marginTop: '12px',
+    paddingTop: '12px',
+    borderTop: '1px solid #e1e1e1',
+  },
+  navMenu: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+  },
+  navItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '8px 0',
+    fontFamily: '"JetBrains Mono", "Courier New", monospace',
+    fontSize: '12px',
+    color: '#555555',
+    borderBottom: '1px solid transparent',
+    transition: 'all 0.2s',
+    cursor: 'pointer',
+    textDecoration: 'none',
+  },
+  navItemActive: {
+    color: '#1A3FA3',
+    borderBottom: '1px solid #1A3FA3',
+  },
+  statusDot: {
+    width: '6px',
+    height: '6px',
+    background: '#2ecc71',
+    borderRadius: '50%',
+    display: 'inline-block',
+    marginRight: '6px',
+    animation: 'pulse 2s infinite',
+  },
+  colMain: {
+    position: 'fixed',
+    top: 0,
+    left: '300px',
+    right: '335px',
+    height: '100vh',
+    overflowY: 'auto',
+    borderRight: '1px solid rgba(26, 63, 163, 0.18)',
+    backgroundColor: '#E5E7EB',
+  },
+  contentBottomRail: {
+    width: '100%',
+    height: '4px',
+    background: '#1A3FA3',
+    flexShrink: 0,
+  },
+  sectionHeader: {
+    padding: '24px',
+    borderBottom: '1px solid #e1e1e1',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    position: 'sticky',
+    top: 0,
+    background: 'rgba(229,231,235,0.95)',
+    backdropFilter: 'blur(5px)',
+    zIndex: 10,
+  },
+  projectCard: {
+    display: 'block',
+    borderBottom: '1px solid #e1e1e1',
+    transition: 'background 0.2s',
+    cursor: 'pointer',
+  },
+  projectHeader: {
+    display: 'grid',
+    gridTemplateColumns: '80px 1fr auto',
+    padding: '24px',
+    alignItems: 'baseline',
+    gap: '24px',
+  },
+  projectIndex: {
+    fontFamily: '"JetBrains Mono", "Courier New", monospace',
+    color: '#888888',
+  },
+  projectBody: {
+    padding: '0 24px 24px calc(80px + 24px)',
+  },
+  projectDesc: {
+    maxWidth: '500px',
+    color: '#555555',
+    marginBottom: '24px',
+    fontSize: '14px',
+  },
+  tagCluster: {
+    display: 'flex',
+    gap: '6px',
+    flexWrap: 'wrap',
+  },
+  techTag: {
+    fontFamily: '"JetBrains Mono", "Courier New", monospace',
+    fontSize: '12px',
+    padding: '2px 6px',
+    border: '1px solid #e1e1e1',
+    color: '#555555',
+    background: 'white',
+  },
+  projectVisual: {
+    marginTop: '24px',
+    background: '#E2E8F0',
+    height: '200px',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontFamily: '"JetBrains Mono", "Courier New", monospace',
+    color: '#888888',
+    fontSize: '12px',
+    border: '1px solid #e1e1e1',
+  },
+  colSpecs: {
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    width: '335px',
+    height: '100vh',
+    overflowY: 'hidden',
+    paddingTop: '10px',
+    borderLeft: '1px solid rgba(26, 63, 163, 0.18)',
+    background: '#F1F5F9',
+    boxShadow: 'inset 0 -4px 0 #1A3FA3',
+  },
+  specBlock: {
+    padding: '16px',
+    borderBottom: '1px solid #e1e1e1',
+  },
+  specTitle: {
+    fontFamily: '"JetBrains Mono", "Courier New", monospace',
+    fontSize: '10px',
+    textTransform: 'uppercase',
+    marginBottom: '8px',
+    color: '#1A3FA3',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  btnMinimal: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '8px 16px',
+    border: '1px solid #1A3FA3',
+    fontFamily: '"JetBrains Mono", "Courier New", monospace',
+    fontSize: '14px',
+    background: 'transparent',
+    color: '#1A3FA3',
+    transition: 'all 0.2s',
+    cursor: 'pointer',
+  },
+  btnMinimalGhost: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '8px 16px',
+    border: '1px solid transparent',
+    fontFamily: '"JetBrains Mono", "Courier New", monospace',
+    fontSize: '14px',
+    background: 'transparent',
+    color: '#555555',
+    transition: 'all 0.2s',
+    cursor: 'pointer',
+  },
+};
+
+const TechTag = ({ children, style }) => (
+  <span style={{ ...customStyles.techTag, ...style }}>{children}</span>
+);
+
+const HoverArticle = ({ children }) => {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <article
+      style={{ ...customStyles.projectCard, background: hovered ? '#F1F5F9' : 'transparent' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {children}
+    </article>
+  );
+};
+
+const ProjectCard = ({ index, title, year, description, points, tags, link }) => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <article
+      style={{ ...customStyles.projectCard, background: hovered ? '#F1F5F9' : 'transparent' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={customStyles.projectHeader}>
+        <span style={customStyles.projectIndex}>{index}</span>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+          <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: '22px', color: '#1A3FA3' }}>{title}</h3>
+          {link && (
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', color: '#1A3FA3', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '0.04em' }}
+            >
+              [link]
+            </a>
+          )}
+        </div>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid #e1e1e1', padding: '2px 6px', color: '#1A3FA3' }}>{year}</span>
+      </div>
+      <div style={customStyles.projectBody}>
+        <p style={{ margin: '0 0 12px 0', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
+          {description}
+        </p>
+        {points?.length > 0 && (
+          <ul style={{ margin: '0 0 16px 0', paddingLeft: '18px', listStyleType: 'disc', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
+            {points.map((point, i) => (
+              <li key={i} style={{ marginBottom: '6px' }}>
+                {point}
+              </li>
+            ))}
+          </ul>
+        )}
+        {tags?.length > 0 && (
+          <div style={customStyles.tagCluster}>
+            {tags.map((tag, i) => <TechTag key={i}>{tag}</TechTag>)}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+};
+
+const SkillSection = ({ label, tags }) => (
+  <div style={{ marginBottom: '8px' }}>
+    <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3', marginBottom: '4px' }}>{label}</div>
+    <div style={customStyles.tagCluster}>
+      {tags.map((tag, i) => <TechTag key={i} style={{ fontSize: '10.5px' }}>{tag}</TechTag>)}
+    </div>
+  </div>
+);
+
+const NavItem = ({ label, shortLabel, active, onClick }) => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      style={{
+        ...customStyles.navItem,
+        ...(active ? customStyles.navItemActive : {}),
+        color: active || hovered ? '#1A3FA3' : '#555555',
+        paddingLeft: hovered && !active ? '4px' : '0',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={onClick}
+    >
+      <span>{label}</span>
+      <span>{shortLabel}</span>
+    </div>
+  );
+};
+
+const Sidebar = ({ activeNav, setActiveNav }) => {
+  const navItems = [
+    { label: '0. SYSTEM OVERVIEW', short: '[HOME]', key: 'index' },
+    { label: '1. WORK EXPERIENCE', short: '[EXP]', key: 'experience' },
+    { label: '2. TECHNICAL PROJECTS', short: '[PROJ]', key: 'work' },
+    { label: '3. EDUCATION', short: '[EDU]', key: 'education' },
+    { label: '4. BEYOND CODE', short: '[MORE]', key: 'more' },
+  ];
+
+  return (
+    <aside style={customStyles.colIdentity}>
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '28px' }}>
+          <div style={customStyles.logoMark}>
+            <Image
+              src="/images/profile.JPG"
+              alt="Divij Vipul Shah"
+              width={64}
+              height={64}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </div>
+          <div
+            style={{
+              fontFamily: '"JetBrains Mono", "Courier New", monospace',
+              fontSize: '10px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              color: '#1A3FA3',
+              textAlign: 'right',
+              lineHeight: 1.35,
+            }}
+          >
+            V4.09
+            <br />
+            BUILD 2001
+          </div>
+        </div>
+
+        <h1 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 700, fontSize: '26px', marginBottom: '8px', color: '#1A3FA3' }}>Divij Vipul Shah</h1>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#555555' }}>
+          <span style={{ fontWeight: 700 }}>Full Stack AI Engineer</span><br />Austin, TX
+        </p>
+
+        <div style={customStyles.engineerMeta}>
+          <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px', color: '#1A3FA3' }}>
+            <span style={customStyles.statusDot}></span>Open to AI / SDE opportunities
+          </div>
+          <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888888' }}>UTC−6 / CST</div>
+        </div>
+      </div>
+
+      <nav style={customStyles.navMenu}>
+        {navItems.map(item => (
+          <NavItem
+            key={item.key}
+            label={item.label}
+            shortLabel={item.short}
+            active={activeNav === item.key}
+            onClick={() => setActiveNav(item.key)}
+          />
+        ))}
+      </nav>
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888888' }}>
+        <span>© 2026 Shah Systems<br />All rights reserved.</span>
+        <Image src="/favicon.ico" alt="Shah Systems favicon" width={14} height={14} />
+      </div>
+    </aside>
+  );
+};
+
+const SpecsSidebar = () => {
+  const [hoveredLink, setHoveredLink] = useState('');
+
+  return (
+    <aside style={customStyles.colSpecs}>
+      <div style={customStyles.specBlock}>
+        <div style={customStyles.specTitle}>SKILLS</div>
+        <SkillSection label="SYSTEMS" tags={['Distributed APIs', 'Event-Driven Architecture', 'Microservices', 'Production Monitoring']} />
+        <SkillSection label="LANGUAGES" tags={['JavaScript', 'TypeScript', 'Python', 'SQL', 'C++', 'Java', 'C#']} />
+        <SkillSection label="FRAMEWORKS" tags={['React', 'Next.js', 'Node.js', 'Express', 'ASP.NET']} />
+        <SkillSection label="AI & DATA" tags={['Retrieval-Augmented Generation (RAG)', 'LLM Integration', 'LangChain', 'TensorFlow', 'PyTorch']} />
+        <SkillSection label="CLOUD & DEVOPS" tags={['AWS', 'Docker', 'Kubernetes', 'GitHub Actions', 'CI/CD']} />
+        <SkillSection label="DATABASES" tags={['PostgreSQL', 'Supabase', 'MySQL', 'MongoDB']} />
+      </div>
+
+      <div style={customStyles.specBlock}>
+        <div style={customStyles.specTitle}>CONNECT</div>
+        <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px 8px' }}>
+          <a
+            href="https://www.linkedin.com/in/divijvshah/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              ...customStyles.navItem,
+              fontSize: '10px',
+              color: hoveredLink === 'linkedin' ? '#1A3FA3' : '#555555',
+              borderBottom: '1px solid transparent',
+            }}
+            onMouseEnter={() => setHoveredLink('linkedin')}
+            onMouseLeave={() => setHoveredLink('')}
+          >
+            LINKEDIN -&gt;
+          </a>
+          <a
+            href="https://github.com/DivijShah"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              ...customStyles.navItem,
+              fontSize: '10px',
+              color: hoveredLink === 'github' ? '#1A3FA3' : '#555555',
+              borderBottom: '1px solid transparent',
+            }}
+            onMouseEnter={() => setHoveredLink('github')}
+            onMouseLeave={() => setHoveredLink('')}
+          >
+            GITHUB -&gt;
+          </a>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              ...customStyles.navItem,
+              fontSize: '10px',
+              color: hoveredLink === 'resume' ? '#1A3FA3' : '#555555',
+              borderBottom: '1px solid transparent',
+            }}
+            onMouseEnter={() => setHoveredLink('resume')}
+            onMouseLeave={() => setHoveredLink('')}
+          >
+            RESUME -&gt;
+          </a>
+          <a
+            href="mailto:divij4901@gmail.com"
+            style={{
+              ...customStyles.navItem,
+              fontSize: '10px',
+              color: hoveredLink === 'email' ? '#1A3FA3' : '#555555',
+              borderBottom: '1px solid transparent',
+            }}
+            onMouseEnter={() => setHoveredLink('email')}
+            onMouseLeave={() => setHoveredLink('')}
+          >
+            EMAIL -&gt;
+          </a>
+        </div>
+      </div>
+    </aside>
+  );
+};
+
+const IndexPage = ({ setActiveNav }) => {
+  const [btnHovered, setBtnHovered] = useState(false);
+  const [contactHovered, setContactHovered] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const contactEmail = 'divij4901@gmail.com';
+
+  const codeSnippets = [
+    'I <- analyze() + predict(using = "Sports Data")',
+    'const api: WebAPI = new WebAPI("Scalable & Secure");',
+    'model.optimize(ml_workflow=True)',
+    "SELECT * FROM data_models WHERE impact = 'high';",
+    'const ui = createUX({ interactive: true });',
+    'create_ai_systems(level="production")',
+  ];
+  const typewriterBoxWidth = `${Math.max(...codeSnippets.map((line) => line.length)) + 8}ch`;
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch (_err) {
+      setCopied(false);
+    }
+  };
+  const focusAreas = [
+    'Retrieval augmented AI systems',
+    'Real time inference and validation pipelines',
+    'Distributed APIs and scalable backend architecture',
+    'Production CI/CD and system reliability',
+  ];
+  const impactItems = [
+    'Scaled AI platform to 10K+ monthly users',
+    'Improved system performance by 45%',
+    'Reduced bounce rate by 25%',
+    'Achieved 99.9% uptime in production',
+    'Reduced API latency by up to 40%',
+  ];
+
+  return (
+    <main style={customStyles.colMain}>
+      <section style={{ padding: '64px 24px', borderBottom: '1px solid #e1e1e1' }}>
+        <div
+          style={{
+            background: 'rgba(15, 23, 42, 0.9)',
+            border: '2px solid rgba(59, 130, 246, 0.45)',
+            borderRadius: '14px',
+            padding: '20px 24px',
+            marginBottom: '28px',
+            fontFamily: '"JetBrains Mono", "Courier New", monospace',
+            fontSize: '16.5px',
+            color: '#dbeafe',
+            minHeight: '84px',
+            width: `min(100%, ${typewriterBoxWidth})`,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            textAlign: 'left',
+            whiteSpace: 'nowrap',
+            boxShadow: '0 18px 40px rgba(15, 23, 42, 0.35)',
+          }}
+        >
+          <Typewriter
+            words={codeSnippets}
+            loop
+            typeSpeed={50}
+            deleteSpeed={25}
+            delaySpeed={1500}
+            cursor
+            cursorStyle="|"
+          />
+        </div>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: '48px', lineHeight: 1.1, marginBottom: '24px', color: '#1A3FA3' }}>
+          Engineering scalable<br />
+          <span style={{ color: '#555555', fontStyle: 'italic' }}>AI Systems</span> in production.
+        </h2>
+        <div style={{ display: 'flex', gap: '16px' }}>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              ...customStyles.btnMinimal,
+              background: btnHovered ? '#1A3FA3' : 'transparent',
+              color: btnHovered ? '#E5E7EB' : '#1A3FA3',
+            }}
+            onMouseEnter={() => setBtnHovered(true)}
+            onMouseLeave={() => setBtnHovered(false)}
+          >
+            VIEW RESUME
+          </a>
+          <div
+            style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}
+            onMouseEnter={() => setContactHovered(true)}
+            onMouseLeave={() => setContactHovered(false)}
+          >
+            <button
+              type="button"
+              style={customStyles.btnMinimalGhost}
+              onClick={() => setActiveNav('more')}
+            >
+              CONTACT //
+            </button>
+            {contactHovered && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  background: '#1A3FA3',
+                  color: '#E5E7EB',
+                  border: '1px solid #1A3FA3',
+                  borderRadius: '10px',
+                  padding: '10px 12px',
+                  fontFamily: '"JetBrains Mono", "Courier New", monospace',
+                  fontSize: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  whiteSpace: 'nowrap',
+                  zIndex: 20,
+                }}
+              >
+                <span>{contactEmail}</span>
+                <button
+                  type="button"
+                  onClick={copyEmail}
+                  style={{
+                    border: '1px solid #E5E7EB',
+                    background: '#1A3FA3',
+                    color: '#E5E7EB',
+                    borderRadius: '6px',
+                    padding: '4px 8px',
+                    fontFamily: '"JetBrains Mono", "Courier New", monospace',
+                    fontSize: '12px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {copied ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ padding: '32px 24px', borderBottom: '1px solid #e1e1e1' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '18px' }}>
+            <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+              FOCUS_AREAS
+            </h3>
+            <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+              [{focusAreas.length} ITEMS]
+            </span>
+          </div>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0, paddingLeft: '18px', color: '#555555' }}>
+            {focusAreas.map((item) => (
+              <li key={item} style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px' }}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div style={{ padding: '32px 24px', borderBottom: '1px solid #e1e1e1' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '18px' }}>
+            <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+              IMPACT
+            </h3>
+            <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+              [{impactItems.length} ITEMS]
+            </span>
+          </div>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0, paddingLeft: '18px', color: '#555555' }}>
+            {impactItems.map((item) => (
+              <li key={item} style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px' }}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div style={customStyles.contentBottomRail} />
+    </main>
+  );
+};
+
+const ExperiencePage = () => {
+  const experiences = [
+    {
+      role: 'Founding Full Stack AI Engineer',
+      company: 'ASTER INC',
+      period: 'Jul 2025 – Present',
+      location: 'Austin, TX',
+      description: 'Built and scaled a production AI platform serving 10K+ monthly users.',
+      points: [
+        'Owned end to end architecture across frontend, backend, and inference systems',
+        'Developed retrieval augmented AI for cycle prediction and contextual insights',
+        'Improved performance by 45% and reduced bounce rate by 25%',
+        'Achieved 99.9% uptime with automated CI/CD and 95% test coverage',
+      ],
+      tags: ['Next.js', 'TypeScript', 'Python', 'PostgreSQL', 'Supabase', 'RAG', 'OpenAI API', 'AWS', 'CI/CD'],
+    },
+    {
+      role: 'Program Analyst',
+      company: 'NC STATE UNIVERSITY',
+      period: 'Feb 2024 – May 2025',
+      description: 'Designed automated data infrastructure for operational analytics.',
+      points: [
+        'Architected ETL pipelines improving reporting accuracy by 30%',
+        'Optimized backend schemas and queries, improving retrieval speed by 40%',
+        'Built executive dashboards reducing audit discrepancies by 40%',
+      ],
+      tags: ['Python', 'SQL', 'ETL Pipelines', 'PostgreSQL', 'Power BI', 'Query Optimization'],
+    },
+    {
+      role: 'Software Development Engineer',
+      company: 'JINEE INFOTECH',
+      period: 'Jan 2023 – May 2023',
+      description: 'Engineered production backend systems under concurrent enterprise load.',
+      points: [
+        'Built 10+ secure REST APIs increasing transaction throughput by 35%',
+        'Implemented containerized microservices with Kubernetes CI/CD',
+        'Reduced API latency by 35% through query and service optimization',
+      ],
+      tags: ['ASP.NET', 'C#', 'Node.js', 'Express', 'REST APIs', 'Kubernetes', 'Docker', 'MySQL', 'CI/CD'],
+    },
+    {
+      role: 'Business Analyst Intern',
+      company: 'TALENTSERVE',
+      period: 'May 2022 – Jul 2022',
+      description: 'Supported analytics and reporting operations across business workflows.',
+      points: [
+        'Built BI dashboards and automated reporting workflows',
+      ],
+      tags: ['BI Dashboards', 'Reporting', 'Analytics'],
+      showTags: false,
+    },
+    {
+      role: 'Data Science Intern',
+      company: 'MEMENT.IO',
+      period: 'Feb 2022 – May 2022',
+      description: 'Contributed to data pipeline and model quality improvements.',
+      points: [
+        'Optimized ETL pipelines and improved model performance',
+      ],
+      tags: ['Data Science', 'ETL', 'Model Optimization'],
+      showTags: false,
+    },
+  ];
+  const earlierExperienceStart = 3;
+  const earlierExperienceCount = Math.max(0, experiences.length - earlierExperienceStart);
+
+  return (
+    <main style={customStyles.colMain}>
+      <section style={{ padding: '59px 24px', borderBottom: '1px solid #e1e1e1' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
+          <span style={{ color: '#555555', fontStyle: 'italic' }}>Applied</span> Engineering
+        </h2>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: '#555555' }}>Roles &amp; Production Systems</p>
+      </section>
+
+      <div style={customStyles.sectionHeader}>
+        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>WORK_HISTORY</h3>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>[{experiences.length} ITEMS]</span>
+      </div>
+
+      {experiences.map((exp, i) => {
+        return (
+          <React.Fragment key={`${exp.role}-${exp.company}`}>
+            {i === earlierExperienceStart && (
+              <div
+                style={{
+                  ...customStyles.sectionHeader,
+                  position: 'static',
+                  padding: '24px',
+                  background: 'transparent',
+                  backdropFilter: 'none',
+                  zIndex: 'auto',
+                }}
+              >
+                <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+                  INTERNSHIP_HISTORY
+                </h3>
+                <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+                  [{earlierExperienceCount} ITEMS]
+                </span>
+              </div>
+            )}
+            <HoverArticle>
+              <div style={{ ...customStyles.projectHeader, gridTemplateColumns: '40px 1fr auto', gap: '16px' }}>
+                <span style={customStyles.projectIndex}>0{i + 1}</span>
+                <div>
+                  <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: '22px', color: '#1A3FA3', marginBottom: '4px', whiteSpace: 'nowrap' }}>{exp.role}</h3>
+                  <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '13px', color: '#555555' }}>{exp.location ? `${exp.company} · ${exp.location}` : exp.company}</div>
+                </div>
+                <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid #e1e1e1', padding: '2px 6px', color: '#1A3FA3', whiteSpace: 'nowrap' }}>{exp.period}</span>
+              </div>
+              <div style={{ ...customStyles.projectBody, padding: '0 24px 24px calc(56px + 24px)' }}>
+                <p style={{ margin: '0 0 12px 0', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45, fontWeight: 700 }}>
+                  {exp.description}
+                </p>
+                {exp.points && (
+                  <ul style={{ margin: '0 0 18px 18px', paddingLeft: '18px', listStyleType: 'disc', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
+                    {exp.points.map((point, idx) => (
+                      <li key={idx} style={{ marginBottom: '6px' }}>
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {exp.showTags !== false && exp.tags?.length > 0 && (
+                  <div style={customStyles.tagCluster}>
+                    {exp.tags.map((tag, j) => <TechTag key={j}>{tag}</TechTag>)}
+                  </div>
+                )}
+              </div>
+            </HoverArticle>
+          </React.Fragment>
+        );
+      })}
+      <div style={customStyles.contentBottomRail} />
+    </main>
+  );
+};
+
+const WorkPage = () => {
+  const projects = [
+    {
+      index: '01',
+      title: 'Jarvis Mock Interviewer',
+      link: 'https://github.com/DivijShah/Jarvis-AI-Mock-Interviewer',
+      year: '2025',
+      description: 'AI powered mock interview system with real time LLM driven follow ups and voice interaction.',
+      points: [
+        'Built streaming inference pipeline for dynamic question generation',
+        'Implemented resilient backend safeguards for API quota failures and malformed responses',
+        'Designed modular conversational state management for scalable sessions',
+      ],
+      tags: ['Next.js', 'TypeScript', 'OpenAI API', 'Streaming APIs'],
+    },
+    {
+      index: '02',
+      title: 'AI Personal Assistant',
+      link: 'https://github.com/DivijShah/Sentiment-Analysis-for-Multilingual-Languages',
+      year: '2024',
+      description: 'Context aware retrieval augmented AI assistant with persistent session memory.',
+      points: [
+        'Designed vector retrieval pipelines for contextual response generation',
+        'Built scalable inference APIs with streaming output',
+        'Deployed secure production environment on AWS with state persistence',
+      ],
+      tags: ['Next.js', 'Python', 'RAG', 'Vector Storage', 'AWS'],
+    },
+    {
+      index: '03',
+      title: 'Drowsi-Sense',
+      link: 'https://github.com/DivijShah/drowsi-sense',
+      year: '2024',
+      description: 'Real time computer vision system for driver drowsiness detection.',
+      points: [
+        'Achieved 97% model accuracy on 50K+ labeled images',
+        'Optimized preprocessing and inference latency for live monitoring',
+        'Designed lightweight CNN architecture for resource constrained environments',
+      ],
+      tags: ['Python', 'PyTorch', 'OpenCV'],
+    },
+  ];
+
+  return (
+    <main style={customStyles.colMain}>
+      <section style={{ padding: '59px 24px', borderBottom: '1px solid #e1e1e1' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
+          Project <span style={{ fontStyle: 'italic', color: '#555555' }}>Work.</span>
+        </h2>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: '#555555' }}>Full catalog of selected engineering projects.</p>
+      </section>
+
+      <div style={customStyles.sectionHeader}>
+        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>ALL_PROJECTS</h3>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>[{projects.length} ITEMS]</span>
+      </div>
+
+      {projects.map((project, i) => (
+        <ProjectCard key={i} {...project} />
+      ))}
+
+      <div style={{ padding: '24px', borderBottom: '1px solid #e1e1e1' }}>
+        <a
+          href="https://github.com/DivijShah"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3', textDecoration: 'none' }}
+        >
+          VIEW_MORE_ON_GITHUB -&gt;
+        </a>
+      </div>
+      <div style={customStyles.contentBottomRail} />
+    </main>
+  );
+};
+
+const EducationPage = () => {
+  const education = [
+    {
+      degree: 'M.S. Computer Science',
+      university: 'NORTH CAROLINA STATE UNIVERSITY',
+      period: '2023 – 2025',
+      subtitle: 'Data Science Track',
+      gpa: 'GPA 3.4/4.0',
+      tags: ['Software Engineering', 'Neural Networks and Deep Learning', 'Cloud Computing', 'Foundations of AI', 'Statistics'],
+    },
+    {
+      degree: 'B.Tech. Computer Engineering',
+      university: 'PANDIT DEENDAYAL ENERGY UNIVERSITY',
+      period: '2019 – 2023',
+      gpa: 'GPA 9.33/10.00',
+      tags: ['Data Structures and Algorithms', 'Database Management System', 'Object Oriented Programming'],
+    },
+  ];
+
+  return (
+    <main style={customStyles.colMain}>
+      <section style={{ padding: '64px 24px', borderBottom: '1px solid #e1e1e1' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
+          Education.
+        </h2>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: '#555555' }}>
+          Academic foundation and core areas of study.
+        </p>
+      </section>
+
+      <div style={customStyles.sectionHeader}>
+        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>EDUCATION</h3>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>[{education.length} ITEMS]</span>
+      </div>
+
+      {education.map((item, i) => (
+        <HoverArticle key={item.degree}>
+          <div style={customStyles.projectHeader}>
+            <span style={customStyles.projectIndex}>0{i + 1}</span>
+            <div>
+              <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: '22px', color: '#1A3FA3', marginBottom: '4px' }}>{item.degree}</h3>
+              {item.university && (
+                <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#555555', marginBottom: '4px' }}>{item.university}</div>
+              )}
+              {item.subtitle && (
+                <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '13px', color: '#555555' }}>{item.subtitle}</div>
+              )}
+            </div>
+            <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid #e1e1e1', padding: '2px 6px', color: '#1A3FA3', whiteSpace: 'nowrap' }}>{item.period}</span>
+          </div>
+          <div style={customStyles.projectBody}>
+            {item.gpa && (
+              <p
+                style={{
+                  margin: '0 0 12px 0',
+                  fontFamily: '"JetBrains Mono", "Courier New", monospace',
+                  fontSize: '13px',
+                  color: '#555555',
+                }}
+              >
+                {item.gpa}
+              </p>
+            )}
+            <div style={customStyles.tagCluster}>
+              {item.tags.map((tag) => <TechTag key={tag}>{tag}</TechTag>)}
+            </div>
+          </div>
+        </HoverArticle>
+      ))}
+      <div style={customStyles.contentBottomRail} />
+    </main>
+  );
+};
+
+const BeyondCodePage = () => {
+  return (
+    <main style={{ ...customStyles.colMain, boxShadow: 'inset 0 -4px 0 #1A3FA3' }}>
+      <section style={{ padding: '64px 24px', borderBottom: '1px solid #e1e1e1' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
+          Beyond <span style={{ fontStyle: 'italic', color: '#555555' }}>Code.</span>
+        </h2>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: '#555555' }}>More about me.</p>
+      </section>
+      <section style={{ padding: '24px', borderBottom: '1px solid #e1e1e1' }}>
+        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
+          I build with code, but I try not to live like it.
+        </p>
+        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
+          I spend an unreasonable amount of time analyzing <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Soccer</span> - formations, movement, underlying stats. Some people watch games. I run mental models. (Yes, <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Manchester United</span> is always involved.)
+        </p>
+        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
+          <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Swimming</span> came before code. I even became a <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Certified Lifeguard</span>. Staying calm when someone&apos;s flailing in the deep end is great practice for when a deploy goes sideways.
+        </p>
+        <p style={{ margin: 0, maxWidth: '780px', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
+          <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Hiking</span> helps me zoom out. <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Photography</span> forces me to zoom in. Both are great reminders that perspective matters in life and in systems.
+        </p>
+      </section>
+    </main>
+  );
+};
+
+const App = () => {
+  const [activeNav, setActiveNav] = useState('index');
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600&display=swap');
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background-color: #E5E7EB; color: #1A3FA3; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+      a { text-decoration: none; color: inherit; cursor: pointer; }
+      ul { list-style: none; }
+      @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
+
+  const renderMain = () => {
+    switch (activeNav) {
+      case 'index': return <IndexPage setActiveNav={setActiveNav} />;
+      case 'experience': return <ExperiencePage />;
+      case 'work': return <WorkPage />;
+      case 'education': return <EducationPage />;
+      case 'more': return <BeyondCodePage />;
+      default: return <IndexPage setActiveNav={setActiveNav} />;
+    }
+  };
+
+  return (
+    <>
+      <div style={customStyles.topRail} />
+      <div style={customStyles.layoutContainer}>
+        <Sidebar activeNav={activeNav} setActiveNav={setActiveNav} />
+        {renderMain()}
+        <SpecsSidebar />
+      </div>
+    </>
+  );
+};
+
+export default App;
