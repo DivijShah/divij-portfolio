@@ -3,15 +3,46 @@
 import React, { useState, useEffect } from 'react';
 import { Typewriter } from 'react-simple-typewriter';
 import Image from 'next/image';
+import { createPortal } from 'react-dom';
 
-const customStyles = {
-  root: {
+const THEME_STORAGE_KEY = 'portfolio-theme';
+
+const themeTokens = {
+  light: {
     '--bg': '#E5E7EB',
-    '--fg-primary': '#1A3FA3',
+    '--surface': '#F1F5F9',
+    '--surface-muted': '#D1D5DB',
     '--fg-secondary': '#555555',
     '--fg-tertiary': '#888888',
     '--border': '#e1e1e1',
-    '--border-strong': '#2563EB',
+    '--divider': 'rgba(26, 63, 163, 0.18)',
+    '--header-bg': 'rgba(229,231,235,0.95)',
+    '--tag-bg': '#ffffff',
+    '--on-accent': '#E5E7EB',
+    '--overlay': 'rgba(15, 23, 42, 0.35)',
+    '--toggle-bg': 'rgba(15, 23, 42, 0.9)',
+    '--toggle-hover': 'rgba(15, 23, 42, 0.94)',
+  },
+  dark: {
+    '--bg': '#16161A',
+    '--surface': '#16161A',
+    '--surface-muted': '#888888',
+    '--fg-secondary': '#A7B4C8',
+    '--fg-tertiary': '#A7B4C8',
+    '--border': '#D1D5DB',
+    '--divider': '#D1D5DB',
+    '--header-bg': 'rgba(22, 22, 26, 0.95)',
+    '--tag-bg': '#0F172A',
+    '--on-accent': '#E5E7EB',
+    '--overlay': 'rgba(15, 23, 42, 0.62)',
+    '--toggle-bg': 'rgba(15, 23, 42, 0.9)',
+    '--toggle-hover': 'rgba(15, 23, 42, 0.94)',
+  },
+};
+
+const customStyles = {
+  root: {
+    backgroundColor: 'var(--bg)',
   },
   layoutContainer: {
     display: 'grid',
@@ -31,20 +62,20 @@ const customStyles = {
     position: 'sticky',
     top: 0,
     height: '100vh',
-    borderRight: '1px solid rgba(26, 63, 163, 0.18)',
+    borderRight: '1px solid var(--divider)',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: '20px',
     overflowY: 'auto',
-    backgroundColor: '#E5E7EB',
+    backgroundColor: 'var(--bg)',
     boxShadow: 'inset 0 -4px 0 #1A3FA3',
   },
   logoMark: {
     width: '64px',
     height: '64px',
     background: '#1A3FA3',
-    color: '#E5E7EB',
+    color: 'var(--on-accent)',
     borderRadius: '50%',
     overflow: 'hidden',
     display: 'flex',
@@ -60,7 +91,7 @@ const customStyles = {
   engineerMeta: {
     marginTop: '12px',
     paddingTop: '12px',
-    borderTop: '1px solid #e1e1e1',
+    borderTop: '1px solid var(--border)',
   },
   navMenu: {
     display: 'flex',
@@ -74,7 +105,7 @@ const customStyles = {
     padding: '8px 0',
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
     fontSize: '12px',
-    color: '#555555',
+    color: 'var(--fg-secondary)',
     borderBottom: '1px solid transparent',
     transition: 'all 0.2s',
     cursor: 'pointer',
@@ -100,8 +131,8 @@ const customStyles = {
     right: '335px',
     height: '100vh',
     overflowY: 'auto',
-    borderRight: '1px solid rgba(26, 63, 163, 0.18)',
-    backgroundColor: '#E5E7EB',
+    borderRight: '1px solid var(--divider)',
+    backgroundColor: 'var(--bg)',
   },
   mobileMain: {
     position: 'relative',
@@ -112,17 +143,17 @@ const customStyles = {
     minHeight: 'calc(100vh - 4px)',
     overflowY: 'visible',
     borderRight: 'none',
-    backgroundColor: '#E5E7EB',
+    backgroundColor: 'var(--bg)',
   },
   mobileShell: {
     paddingTop: '4px',
     minHeight: '100vh',
-    backgroundColor: '#E5E7EB',
+    backgroundColor: 'var(--bg)',
   },
   mobileHeader: {
     padding: '16px',
-    borderBottom: '1px solid #e1e1e1',
-    background: '#F1F5F9',
+    borderBottom: '1px solid var(--border)',
+    background: 'var(--surface)',
   },
   mobileHeaderRow: {
     display: 'flex',
@@ -146,7 +177,7 @@ const customStyles = {
     fontSize: '11px',
     textTransform: 'uppercase',
     letterSpacing: '0.05em',
-    color: '#555555',
+    color: 'var(--fg-secondary)',
   },
   mobileProfileMark: {
     width: '88px',
@@ -156,15 +187,15 @@ const customStyles = {
     flexShrink: 0,
     border: '1px solid rgba(26, 63, 163, 0.3)',
     boxShadow: '0 8px 20px rgba(15, 23, 42, 0.18)',
-    background: '#D1D5DB',
+    background: 'var(--surface-muted)',
   },
   mobileNav: {
     display: 'flex',
     overflowX: 'auto',
     gap: '8px',
     padding: '12px 16px',
-    borderBottom: '1px solid #e1e1e1',
-    background: '#E5E7EB',
+    borderBottom: '1px solid var(--border)',
+    background: 'var(--bg)',
     position: 'sticky',
     top: '4px',
     zIndex: 40,
@@ -184,7 +215,7 @@ const customStyles = {
   },
   mobileNavBtnActive: {
     background: '#1A3FA3',
-    color: '#E5E7EB',
+    color: 'var(--on-accent)',
   },
   mobileSpecsToggle: {
     position: 'fixed',
@@ -195,7 +226,7 @@ const customStyles = {
     border: '1px solid #1A3FA3',
     borderRight: 'none',
     background: '#1A3FA3',
-    color: '#E5E7EB',
+    color: 'var(--on-accent)',
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
     fontSize: '10px',
     letterSpacing: '0.08em',
@@ -206,7 +237,7 @@ const customStyles = {
   mobileSpecsOverlay: {
     position: 'fixed',
     inset: 0,
-    background: 'rgba(15, 23, 42, 0.35)',
+    background: 'var(--overlay)',
     zIndex: 98,
   },
   mobileSpecsPanel: {
@@ -216,8 +247,8 @@ const customStyles = {
     width: 'min(92vw, 335px)',
     height: '100dvh',
     overflowY: 'auto',
-    borderLeft: '1px solid rgba(26, 63, 163, 0.18)',
-    background: '#F1F5F9',
+    borderLeft: '1px solid var(--divider)',
+    background: 'var(--surface)',
     boxShadow: 'inset 0 -4px 0 #1A3FA3',
     zIndex: 99,
   },
@@ -228,8 +259,8 @@ const customStyles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '12px 16px',
-    borderBottom: '1px solid #e1e1e1',
-    background: '#F1F5F9',
+    borderBottom: '1px solid var(--border)',
+    background: 'var(--surface)',
     zIndex: 2,
   },
   mobileSpecsClose: {
@@ -245,9 +276,9 @@ const customStyles = {
   },
   mobileFooter: {
     padding: '14px 16px',
-    borderTop: '1px solid #e1e1e1',
+    borderTop: '1px solid var(--border)',
     borderBottom: '4px solid #1A3FA3',
-    background: '#E5E7EB',
+    background: 'var(--bg)',
   },
   mobileFooterInner: {
     display: 'flex',
@@ -258,7 +289,7 @@ const customStyles = {
     fontSize: '10px',
     textTransform: 'uppercase',
     letterSpacing: '0.05em',
-    color: '#888888',
+    color: 'var(--fg-tertiary)',
   },
   contentBottomRail: {
     width: '100%',
@@ -268,19 +299,19 @@ const customStyles = {
   },
   sectionHeader: {
     padding: '24px',
-    borderBottom: '1px solid #e1e1e1',
+    borderBottom: '1px solid var(--border)',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'baseline',
     position: 'sticky',
     top: 0,
-    background: 'rgba(229,231,235,0.95)',
+    background: 'var(--header-bg)',
     backdropFilter: 'blur(5px)',
     zIndex: 10,
   },
   projectCard: {
     display: 'block',
-    borderBottom: '1px solid #e1e1e1',
+    borderBottom: '1px solid var(--border)',
     transition: 'background 0.2s',
     cursor: 'pointer',
   },
@@ -293,14 +324,14 @@ const customStyles = {
   },
   projectIndex: {
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
-    color: '#888888',
+    color: 'var(--fg-tertiary)',
   },
   projectBody: {
     padding: '0 24px 24px calc(80px + 24px)',
   },
   projectDesc: {
     maxWidth: '500px',
-    color: '#555555',
+    color: 'var(--fg-secondary)',
     marginBottom: '24px',
     fontSize: '14px',
   },
@@ -313,22 +344,22 @@ const customStyles = {
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
     fontSize: '12px',
     padding: '2px 6px',
-    border: '1px solid #e1e1e1',
-    color: '#555555',
-    background: 'white',
+    border: '1px solid var(--border)',
+    color: 'var(--fg-secondary)',
+    background: 'var(--tag-bg)',
   },
   projectVisual: {
     marginTop: '24px',
-    background: '#E2E8F0',
+    background: 'var(--surface-muted)',
     height: '200px',
     width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
-    color: '#888888',
+    color: 'var(--fg-tertiary)',
     fontSize: '12px',
-    border: '1px solid #e1e1e1',
+    border: '1px solid var(--border)',
   },
   colSpecs: {
     position: 'fixed',
@@ -338,13 +369,13 @@ const customStyles = {
     height: '100vh',
     overflowY: 'hidden',
     paddingTop: '10px',
-    borderLeft: '1px solid rgba(26, 63, 163, 0.18)',
-    background: '#F1F5F9',
+    borderLeft: '1px solid var(--divider)',
+    background: 'var(--surface)',
     boxShadow: 'inset 0 -4px 0 #1A3FA3',
   },
   specBlock: {
     padding: '16px',
-    borderBottom: '1px solid #e1e1e1',
+    borderBottom: '1px solid var(--border)',
   },
   specTitle: {
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
@@ -375,9 +406,57 @@ const customStyles = {
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
     fontSize: '14px',
     background: 'transparent',
-    color: '#555555',
+    color: 'var(--fg-secondary)',
     transition: 'all 0.2s',
     cursor: 'pointer',
+  },
+  themeToggleDesktop: {
+    position: 'fixed',
+    top: '12px',
+    right: '12px',
+    width: '68px',
+    height: '30px',
+    borderRadius: '999px',
+    border: '1px solid rgba(59, 130, 246, 0.45)',
+    background: 'var(--toggle-bg)',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    padding: '2px',
+    gap: '2px',
+    zIndex: 125,
+    transition: 'background 0.2s',
+  },
+  themeToggleMobile: {
+    position: 'fixed',
+    top: '12px',
+    right: '20px',
+    width: '68px',
+    height: '30px',
+    borderRadius: '999px',
+    border: '1px solid rgba(59, 130, 246, 0.45)',
+    background: 'var(--toggle-bg)',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    padding: '2px',
+    gap: '2px',
+    zIndex: 125,
+    transition: 'background 0.2s',
+  },
+  themeToggleOption: {
+    border: 'none',
+    borderRadius: '999px',
+    background: 'transparent',
+    color: '#dbeafe',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '13px',
+    lineHeight: 1,
+    cursor: 'pointer',
+  },
+  themeToggleOptionActive: {
+    background: '#1A3FA3',
+    color: 'var(--on-accent)',
   },
 };
 
@@ -385,12 +464,66 @@ const TechTag = ({ children, style }) => (
   <span style={{ ...customStyles.techTag, ...style }}>{children}</span>
 );
 
+const ThemeToggle = ({ isMobile, theme, onThemeChange }) => {
+  const [hovered, setHovered] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return createPortal(
+    <div
+      role="group"
+      aria-label="Theme switch"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        ...(isMobile ? customStyles.themeToggleMobile : customStyles.themeToggleDesktop),
+        position: 'fixed',
+        top: '12px',
+        background: hovered ? 'var(--toggle-hover)' : 'var(--toggle-bg)',
+      }}
+    >
+      <button
+        type="button"
+        aria-label="Light mode"
+        aria-pressed={theme === 'light'}
+        onClick={() => onThemeChange('light')}
+        style={{
+          ...customStyles.themeToggleOption,
+          ...(theme === 'light' ? customStyles.themeToggleOptionActive : {}),
+        }}
+      >
+        ☀
+      </button>
+      <button
+        type="button"
+        aria-label="Dark mode"
+        aria-pressed={theme === 'dark'}
+        onClick={() => onThemeChange('dark')}
+        style={{
+          ...customStyles.themeToggleOption,
+          ...(theme === 'dark' ? customStyles.themeToggleOptionActive : {}),
+        }}
+      >
+        ☾
+      </button>
+    </div>,
+    document.body
+  );
+};
+
 const HoverArticle = ({ children }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
     <article
-      style={{ ...customStyles.projectCard, background: hovered ? '#F1F5F9' : 'transparent' }}
+      style={{ ...customStyles.projectCard, background: hovered ? 'var(--surface)' : 'transparent' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -403,7 +536,7 @@ const ProjectCard = ({ index, title, year, description, points, tags, link, isMo
   const [hovered, setHovered] = useState(false);
   return (
     <article
-      style={{ ...customStyles.projectCard, background: hovered ? '#F1F5F9' : 'transparent' }}
+      style={{ ...customStyles.projectCard, background: hovered ? 'var(--surface)' : 'transparent' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -431,14 +564,14 @@ const ProjectCard = ({ index, title, year, description, points, tags, link, isMo
             </a>
           )}
         </div>
-        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: isMobile ? '10px' : '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid #e1e1e1', padding: '2px 6px', color: '#1A3FA3' }}>{year}</span>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: isMobile ? '10px' : '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3' }}>{year}</span>
       </div>
       <div style={isMobile ? { ...customStyles.projectBody, padding: '0 16px 16px 16px' } : customStyles.projectBody}>
-        <p style={{ margin: '0 0 12px 0', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
+        <p style={{ margin: '0 0 12px 0', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
           {description}
         </p>
         {points?.length > 0 && (
-          <ul style={{ margin: '0 0 16px 0', paddingLeft: '18px', listStyleType: 'disc', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
+          <ul style={{ margin: '0 0 16px 0', paddingLeft: '18px', listStyleType: 'disc', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
             {points.map((point, i) => (
               <li key={i} style={{ marginBottom: '6px' }}>
                 {point}
@@ -472,7 +605,7 @@ const NavItem = ({ label, shortLabel, active, onClick }) => {
       style={{
         ...customStyles.navItem,
         ...(active ? customStyles.navItemActive : {}),
-        color: active || hovered ? '#1A3FA3' : '#555555',
+        color: active || hovered ? '#1A3FA3' : 'var(--fg-secondary)',
         paddingLeft: hovered && !active ? '4px' : '0',
       }}
       onMouseEnter={() => setHovered(true)}
@@ -525,7 +658,7 @@ const Sidebar = ({ activeNav, setActiveNav }) => {
         </div>
 
         <h1 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 700, fontSize: '26px', marginBottom: '8px', color: '#1A3FA3' }}>Divij Vipul Shah</h1>
-        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#555555' }}>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--fg-secondary)' }}>
           <span style={{ fontWeight: 700 }}>Full Stack AI Engineer</span><br />Austin, TX
         </p>
 
@@ -533,7 +666,7 @@ const Sidebar = ({ activeNav, setActiveNav }) => {
           <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px', color: '#1A3FA3' }}>
             <span style={customStyles.statusDot}></span>Open to AI / SDE opportunities
           </div>
-          <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888888' }}>UTC−6 / CST</div>
+          <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--fg-tertiary)' }}>UTC−6 / CST</div>
         </div>
       </div>
 
@@ -549,7 +682,7 @@ const Sidebar = ({ activeNav, setActiveNav }) => {
         ))}
       </nav>
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888888' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--fg-tertiary)' }}>
         <span>© 2026 Shah Systems<br />All rights reserved.</span>
         <Image src="/favicon.ico" alt="Shah Systems favicon" width={14} height={14} />
       </div>
@@ -582,7 +715,7 @@ const SpecsContent = ({ compact = false }) => {
             style={{
               ...customStyles.navItem,
               fontSize: compact ? '9px' : '10px',
-              color: hoveredLink === 'linkedin' ? '#1A3FA3' : '#555555',
+              color: hoveredLink === 'linkedin' ? '#1A3FA3' : 'var(--fg-secondary)',
               borderBottom: '1px solid transparent',
             }}
             onMouseEnter={() => setHoveredLink('linkedin')}
@@ -597,7 +730,7 @@ const SpecsContent = ({ compact = false }) => {
             style={{
               ...customStyles.navItem,
               fontSize: compact ? '9px' : '10px',
-              color: hoveredLink === 'github' ? '#1A3FA3' : '#555555',
+              color: hoveredLink === 'github' ? '#1A3FA3' : 'var(--fg-secondary)',
               borderBottom: '1px solid transparent',
             }}
             onMouseEnter={() => setHoveredLink('github')}
@@ -612,7 +745,7 @@ const SpecsContent = ({ compact = false }) => {
             style={{
               ...customStyles.navItem,
               fontSize: compact ? '9px' : '10px',
-              color: hoveredLink === 'resume' ? '#1A3FA3' : '#555555',
+              color: hoveredLink === 'resume' ? '#1A3FA3' : 'var(--fg-secondary)',
               borderBottom: '1px solid transparent',
             }}
             onMouseEnter={() => setHoveredLink('resume')}
@@ -625,7 +758,7 @@ const SpecsContent = ({ compact = false }) => {
             style={{
               ...customStyles.navItem,
               fontSize: compact ? '9px' : '10px',
-              color: hoveredLink === 'email' ? '#1A3FA3' : '#555555',
+              color: hoveredLink === 'email' ? '#1A3FA3' : 'var(--fg-secondary)',
               borderBottom: '1px solid transparent',
             }}
             onMouseEnter={() => setHoveredLink('email')}
@@ -687,7 +820,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
 
   return (
     <main style={isMobile ? customStyles.mobileMain : customStyles.colMain}>
-      <section style={{ padding: isMobile ? '28px 16px' : '64px 24px', borderBottom: '1px solid #e1e1e1' }}>
+      <section style={{ padding: isMobile ? '28px 16px' : '64px 24px', borderBottom: '1px solid var(--border)' }}>
         <div
           style={{
             background: 'rgba(15, 23, 42, 0.9)',
@@ -725,7 +858,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
         </div>
         <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '34px' : '48px', lineHeight: 1.1, marginBottom: '24px', color: '#1A3FA3' }}>
           Engineering scalable<br />
-          <span style={{ color: '#555555', fontStyle: 'italic' }}>AI Systems</span> in production.
+          <span style={{ color: 'var(--fg-secondary)', fontStyle: 'italic' }}>AI Systems</span> in production.
         </h2>
         <div style={{ display: 'flex', gap: '12px', flexWrap: isMobile ? 'wrap' : 'nowrap' }}>
           <a
@@ -735,7 +868,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
             style={{
               ...customStyles.btnMinimal,
               background: btnHovered ? '#1A3FA3' : 'transparent',
-              color: btnHovered ? '#E5E7EB' : '#1A3FA3',
+              color: btnHovered ? 'var(--on-accent)' : '#1A3FA3',
             }}
             onMouseEnter={() => setBtnHovered(true)}
             onMouseLeave={() => setBtnHovered(false)}
@@ -761,7 +894,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
                   top: '100%',
                   left: 0,
                   background: '#1A3FA3',
-                  color: '#E5E7EB',
+                  color: 'var(--on-accent)',
                   border: '1px solid #1A3FA3',
                   borderRadius: '10px',
                   padding: '10px 12px',
@@ -779,9 +912,9 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
                   type="button"
                   onClick={copyEmail}
                   style={{
-                    border: '1px solid #E5E7EB',
+                    border: '1px solid var(--on-accent)',
                     background: '#1A3FA3',
-                    color: '#E5E7EB',
+                    color: 'var(--on-accent)',
                     borderRadius: '6px',
                     padding: '4px 8px',
                     fontFamily: '"JetBrains Mono", "Courier New", monospace',
@@ -798,7 +931,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
       </section>
 
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ padding: isMobile ? '24px 16px' : '32px 24px', borderBottom: '1px solid #e1e1e1' }}>
+        <div style={{ padding: isMobile ? '24px 16px' : '32px 24px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '18px' }}>
             <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
               FOCUS_AREAS
@@ -807,7 +940,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
               [{focusAreas.length} ITEMS]
             </span>
           </div>
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0, paddingLeft: '18px', color: '#555555' }}>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0, paddingLeft: '18px', color: 'var(--fg-secondary)' }}>
             {focusAreas.map((item) => (
               <li key={item} style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px' }}>
                 {item}
@@ -815,7 +948,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
             ))}
           </ul>
         </div>
-        <div style={{ padding: isMobile ? '24px 16px' : '32px 24px', borderBottom: '1px solid #e1e1e1' }}>
+        <div style={{ padding: isMobile ? '24px 16px' : '32px 24px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '18px' }}>
             <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
               IMPACT
@@ -824,7 +957,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
               [{impactItems.length} ITEMS]
             </span>
           </div>
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0, paddingLeft: '18px', color: '#555555' }}>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0, paddingLeft: '18px', color: 'var(--fg-secondary)' }}>
             {impactItems.map((item) => (
               <li key={item} style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px' }}>
                 {item}
@@ -906,11 +1039,11 @@ const ExperiencePage = ({ isMobile }) => {
 
   return (
     <main style={isMobile ? customStyles.mobileMain : customStyles.colMain}>
-      <section style={{ padding: isMobile ? '28px 16px' : '59px 24px', borderBottom: '1px solid #e1e1e1' }}>
+      <section style={{ padding: isMobile ? '28px 16px' : '59px 24px', borderBottom: '1px solid var(--border)' }}>
         <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
-          <span style={{ color: '#555555', fontStyle: 'italic' }}>Applied</span> Engineering
+          <span style={{ color: 'var(--fg-secondary)', fontStyle: 'italic' }}>Applied</span> Engineering
         </h2>
-        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: '#555555' }}>Roles &amp; Production Systems</p>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: 'var(--fg-secondary)' }}>Roles &amp; Production Systems</p>
       </section>
 
       <div style={isMobile ? { ...customStyles.sectionHeader, padding: '16px', position: 'static' } : customStyles.sectionHeader}>
@@ -945,21 +1078,21 @@ const ExperiencePage = ({ isMobile }) => {
                 <span style={customStyles.projectIndex}>0{i + 1}</span>
                 <div>
                   <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '19px' : '22px', color: '#1A3FA3', marginBottom: '4px', whiteSpace: isMobile ? 'normal' : 'nowrap' }}>{exp.role}</h3>
-                  <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '13px', color: '#555555' }}>{exp.location ? `${exp.company} · ${exp.location}` : exp.company}</div>
+                  <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '13px', color: 'var(--fg-secondary)' }}>{exp.location ? `${exp.company} · ${exp.location}` : exp.company}</div>
                   {isMobile && (
-                    <span style={{ display: 'inline-block', marginTop: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid #e1e1e1', padding: '2px 6px', color: '#1A3FA3' }}>{exp.period}</span>
+                    <span style={{ display: 'inline-block', marginTop: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3' }}>{exp.period}</span>
                   )}
                 </div>
                 {!isMobile && (
-                  <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid #e1e1e1', padding: '2px 6px', color: '#1A3FA3', whiteSpace: 'nowrap' }}>{exp.period}</span>
+                  <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3', whiteSpace: 'nowrap' }}>{exp.period}</span>
                 )}
               </div>
               <div style={{ ...customStyles.projectBody, padding: isMobile ? '0 16px 16px 16px' : '0 24px 24px calc(56px + 24px)' }}>
-                <p style={{ margin: '0 0 12px 0', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45, fontWeight: 700 }}>
+                <p style={{ margin: '0 0 12px 0', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45, fontWeight: 700 }}>
                   {exp.description}
                 </p>
                 {exp.points && (
-                  <ul style={{ margin: '0 0 18px 18px', paddingLeft: '18px', listStyleType: 'disc', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
+                  <ul style={{ margin: '0 0 18px 18px', paddingLeft: '18px', listStyleType: 'disc', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
                     {exp.points.map((point, idx) => (
                       <li key={idx} style={{ marginBottom: '6px' }}>
                         {point}
@@ -1027,11 +1160,11 @@ const WorkPage = ({ isMobile }) => {
 
   return (
     <main style={isMobile ? customStyles.mobileMain : customStyles.colMain}>
-      <section style={{ padding: isMobile ? '28px 16px' : '59px 24px', borderBottom: '1px solid #e1e1e1' }}>
+      <section style={{ padding: isMobile ? '28px 16px' : '59px 24px', borderBottom: '1px solid var(--border)' }}>
         <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
-          Project <span style={{ fontStyle: 'italic', color: '#555555' }}>Work.</span>
+          Project <span style={{ fontStyle: 'italic', color: 'var(--fg-secondary)' }}>Work.</span>
         </h2>
-        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: '#555555' }}>Full catalog of selected engineering projects.</p>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: 'var(--fg-secondary)' }}>Full catalog of selected engineering projects.</p>
       </section>
 
       <div style={isMobile ? { ...customStyles.sectionHeader, padding: '16px', position: 'static' } : customStyles.sectionHeader}>
@@ -1043,7 +1176,7 @@ const WorkPage = ({ isMobile }) => {
         <ProjectCard key={i} {...project} isMobile={isMobile} />
       ))}
 
-      <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid #e1e1e1' }}>
+      <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid var(--border)' }}>
         <a
           href="https://github.com/DivijShah"
           target="_blank"
@@ -1079,11 +1212,11 @@ const EducationPage = ({ isMobile }) => {
 
   return (
     <main style={isMobile ? customStyles.mobileMain : customStyles.colMain}>
-      <section style={{ padding: isMobile ? '28px 16px' : '64px 24px', borderBottom: '1px solid #e1e1e1' }}>
+      <section style={{ padding: isMobile ? '28px 16px' : '64px 24px', borderBottom: '1px solid var(--border)' }}>
         <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
           Education.
         </h2>
-        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: '#555555' }}>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: 'var(--fg-secondary)' }}>
           Academic foundation and core areas of study.
         </p>
       </section>
@@ -1100,17 +1233,17 @@ const EducationPage = ({ isMobile }) => {
             <div>
               <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '19px' : '22px', color: '#1A3FA3', marginBottom: '4px' }}>{item.degree}</h3>
               {item.university && (
-                <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#555555', marginBottom: '4px' }}>{item.university}</div>
+                <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--fg-secondary)', marginBottom: '4px' }}>{item.university}</div>
               )}
               {item.subtitle && (
-                <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '13px', color: '#555555' }}>{item.subtitle}</div>
+                <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '13px', color: 'var(--fg-secondary)' }}>{item.subtitle}</div>
               )}
               {isMobile && (
-                <span style={{ display: 'inline-block', marginTop: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid #e1e1e1', padding: '2px 6px', color: '#1A3FA3' }}>{item.period}</span>
+                <span style={{ display: 'inline-block', marginTop: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3' }}>{item.period}</span>
               )}
             </div>
             {!isMobile && (
-              <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid #e1e1e1', padding: '2px 6px', color: '#1A3FA3', whiteSpace: 'nowrap' }}>{item.period}</span>
+              <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3', whiteSpace: 'nowrap' }}>{item.period}</span>
             )}
           </div>
           <div style={isMobile ? { ...customStyles.projectBody, padding: '0 16px 16px 16px' } : customStyles.projectBody}>
@@ -1120,7 +1253,7 @@ const EducationPage = ({ isMobile }) => {
                   margin: '0 0 12px 0',
                   fontFamily: '"JetBrains Mono", "Courier New", monospace',
                   fontSize: '13px',
-                  color: '#555555',
+                  color: 'var(--fg-secondary)',
                 }}
               >
                 {item.gpa}
@@ -1140,23 +1273,23 @@ const EducationPage = ({ isMobile }) => {
 const BeyondCodePage = ({ isMobile }) => {
   return (
     <main style={isMobile ? customStyles.mobileMain : { ...customStyles.colMain, boxShadow: 'inset 0 -4px 0 #1A3FA3' }}>
-      <section style={{ padding: isMobile ? '28px 16px' : '64px 24px', borderBottom: '1px solid #e1e1e1' }}>
+      <section style={{ padding: isMobile ? '28px 16px' : '64px 24px', borderBottom: '1px solid var(--border)' }}>
         <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
-          Beyond <span style={{ fontStyle: 'italic', color: '#555555' }}>Code.</span>
+          Beyond <span style={{ fontStyle: 'italic', color: 'var(--fg-secondary)' }}>Code.</span>
         </h2>
-        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: '#555555' }}>More about me.</p>
+        <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: 'var(--fg-secondary)' }}>More about me.</p>
       </section>
-      <section style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid #e1e1e1' }}>
-        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
-          I build with code, but I try not to live like it.
+      <section style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid var(--border)' }}>
+        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
+          I build systems, but I leave room for spontaneity.
         </p>
-        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
+        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
           I spend an unreasonable amount of time analyzing <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Soccer</span> - formations, movement, underlying stats. Some people watch games. I run mental models. (Yes, <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Manchester United</span> is always involved.)
         </p>
-        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
+        <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
           <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Swimming</span> came before code. I even became a <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Certified Lifeguard</span>. Staying calm when someone&apos;s flailing in the deep end is great practice for when a deploy goes sideways.
         </p>
-        <p style={{ margin: 0, maxWidth: '780px', color: '#555555', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
+        <p style={{ margin: 0, maxWidth: '780px', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
           <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Hiking</span> helps me zoom out. <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Photography</span> forces me to zoom in. Both are great reminders that perspective matters in life and in systems.
         </p>
       </section>
@@ -1169,13 +1302,21 @@ const App = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
   const [isMobileSpecsOpen, setIsMobileSpecsOpen] = useState(false);
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      setTheme(savedTheme);
+    }
+  }, []);
 
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600&display=swap');
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { background-color: #E5E7EB; color: #1A3FA3; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+      body { background-color: var(--bg); color: var(--fg-secondary); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
       a { text-decoration: none; color: inherit; cursor: pointer; }
       ul { list-style: none; }
       @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
@@ -1183,6 +1324,15 @@ const App = () => {
     document.head.appendChild(style);
     return () => document.head.removeChild(style);
   }, []);
+
+  useEffect(() => {
+    const nextTokens = themeTokens[theme];
+    Object.entries(nextTokens).forEach(([token, value]) => {
+      document.documentElement.style.setProperty(token, value);
+    });
+    document.body.style.backgroundColor = nextTokens['--bg'];
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }, [theme]);
 
   useEffect(() => {
     const getViewportWidth = () => (
@@ -1233,10 +1383,15 @@ const App = () => {
     }
   };
 
+  const setThemeMode = (nextTheme) => {
+    setTheme(nextTheme);
+  };
+
   if (isMobile) {
     return (
-      <>
+      <div style={{ ...customStyles.root, ...themeTokens[theme] }}>
         <div style={customStyles.topRail} />
+        <ThemeToggle isMobile theme={theme} onThemeChange={setThemeMode} />
         <div style={customStyles.mobileShell}>
           <header style={customStyles.mobileHeader}>
             <div style={customStyles.mobileHeaderRow}>
@@ -1309,19 +1464,20 @@ const App = () => {
             </aside>
           </>
         )}
-      </>
+      </div>
     );
   }
 
   return (
-    <>
+    <div style={{ ...customStyles.root, ...themeTokens[theme] }}>
       <div style={customStyles.topRail} />
+      <ThemeToggle theme={theme} onThemeChange={setThemeMode} />
       <div style={customStyles.layoutContainer}>
         <Sidebar activeNav={activeNav} setActiveNav={setActiveNav} />
         {renderMain()}
         <SpecsSidebar />
       </div>
-    </>
+    </div>
   );
 };
 
