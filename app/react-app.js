@@ -14,6 +14,7 @@ const themeTokens = {
     '--surface-muted': '#D1D5DB',
     '--fg-secondary': '#555555',
     '--fg-tertiary': '#888888',
+    '--accent-font': '#1A3FA3',
     '--border': '#e1e1e1',
     '--divider': 'rgba(26, 63, 163, 0.18)',
     '--header-bg': 'rgba(229,231,235,0.95)',
@@ -29,6 +30,7 @@ const themeTokens = {
     '--surface-muted': '#888888',
     '--fg-secondary': '#A7B4C8',
     '--fg-tertiary': '#A7B4C8',
+    '--accent-font': '#FFFFF0',
     '--border': '#D1D5DB',
     '--divider': '#D1D5DB',
     '--header-bg': 'rgba(22, 22, 26, 0.95)',
@@ -112,7 +114,7 @@ const customStyles = {
     textDecoration: 'none',
   },
   navItemActive: {
-    color: '#1A3FA3',
+    color: 'var(--accent-font)',
     borderBottom: '1px solid #1A3FA3',
   },
   statusDot: {
@@ -168,7 +170,7 @@ const customStyles = {
   mobileName: {
     fontFamily: '"Playfair Display", "Times New Roman", serif',
     fontSize: '28px',
-    color: '#1A3FA3',
+    color: 'var(--accent-font)',
     lineHeight: 1.1,
     marginBottom: '6px',
   },
@@ -208,7 +210,7 @@ const customStyles = {
     padding: '8px 10px',
     border: '1px solid #1A3FA3',
     background: 'transparent',
-    color: '#1A3FA3',
+    color: 'var(--accent-font)',
     whiteSpace: 'nowrap',
     cursor: 'pointer',
     flexShrink: 0,
@@ -266,7 +268,7 @@ const customStyles = {
   mobileSpecsClose: {
     border: '1px solid #1A3FA3',
     background: 'transparent',
-    color: '#1A3FA3',
+    color: 'var(--accent-font)',
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
     fontSize: '10px',
     textTransform: 'uppercase',
@@ -382,7 +384,7 @@ const customStyles = {
     fontSize: '10px',
     textTransform: 'uppercase',
     marginBottom: '8px',
-    color: '#1A3FA3',
+    color: 'var(--accent-font)',
     display: 'flex',
     justifyContent: 'space-between',
   },
@@ -394,7 +396,7 @@ const customStyles = {
     fontFamily: '"JetBrains Mono", "Courier New", monospace',
     fontSize: '14px',
     background: 'transparent',
-    color: '#1A3FA3',
+    color: 'var(--accent-font)',
     transition: 'all 0.2s',
     cursor: 'pointer',
   },
@@ -552,19 +554,19 @@ const ProjectCard = ({ index, title, year, description, points, tags, link, isMo
       >
         <span style={customStyles.projectIndex}>{index}</span>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
-          <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '20px' : '22px', color: '#1A3FA3' }}>{title}</h3>
+          <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '20px' : '22px', color: 'var(--accent-font)' }}>{title}</h3>
           {link && (
             <a
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', color: '#1A3FA3', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '0.04em' }}
+              style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', color: 'var(--accent-font)', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '0.04em' }}
             >
               [link]
             </a>
           )}
         </div>
-        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: isMobile ? '10px' : '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3' }}>{year}</span>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: isMobile ? '10px' : '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: 'var(--accent-font)' }}>{year}</span>
       </div>
       <div style={isMobile ? { ...customStyles.projectBody, padding: '0 16px 16px 16px' } : customStyles.projectBody}>
         <p style={{ margin: '0 0 12px 0', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', lineHeight: 1.45 }}>
@@ -591,7 +593,7 @@ const ProjectCard = ({ index, title, year, description, points, tags, link, isMo
 
 const SkillSection = ({ label, tags }) => (
   <div style={{ marginBottom: '8px' }}>
-    <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3', marginBottom: '4px' }}>{label}</div>
+    <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)', marginBottom: '4px' }}>{label}</div>
     <div style={customStyles.tagCluster}>
       {tags.map((tag, i) => <TechTag key={i} style={{ fontSize: '10.5px' }}>{tag}</TechTag>)}
     </div>
@@ -605,7 +607,7 @@ const NavItem = ({ label, shortLabel, active, onClick }) => {
       style={{
         ...customStyles.navItem,
         ...(active ? customStyles.navItemActive : {}),
-        color: active || hovered ? '#1A3FA3' : 'var(--fg-secondary)',
+        color: active || hovered ? 'var(--accent-font)' : 'var(--fg-secondary)',
         paddingLeft: hovered && !active ? '4px' : '0',
       }}
       onMouseEnter={() => setHovered(true)}
@@ -646,7 +648,7 @@ const Sidebar = ({ activeNav, setActiveNav }) => {
               fontSize: '10px',
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              color: '#1A3FA3',
+              color: 'var(--accent-font)',
               textAlign: 'right',
               lineHeight: 1.35,
             }}
@@ -657,13 +659,13 @@ const Sidebar = ({ activeNav, setActiveNav }) => {
           </div>
         </div>
 
-        <h1 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 700, fontSize: '26px', marginBottom: '8px', color: '#1A3FA3' }}>Divij Vipul Shah</h1>
+        <h1 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 700, fontSize: '26px', marginBottom: '8px', color: 'var(--accent-font)' }}>Divij Vipul Shah</h1>
         <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--fg-secondary)' }}>
           <span style={{ fontWeight: 700 }}>Full Stack AI Engineer</span><br />Austin, TX
         </p>
 
         <div style={customStyles.engineerMeta}>
-          <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px', color: '#1A3FA3' }}>
+          <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px', color: 'var(--accent-font)' }}>
             <span style={customStyles.statusDot}></span>Open to AI / SDE opportunities
           </div>
           <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--fg-tertiary)' }}>UTC−6 / CST</div>
@@ -715,7 +717,7 @@ const SpecsContent = ({ compact = false }) => {
             style={{
               ...customStyles.navItem,
               fontSize: compact ? '9px' : '10px',
-              color: hoveredLink === 'linkedin' ? '#1A3FA3' : 'var(--fg-secondary)',
+              color: hoveredLink === 'linkedin' ? 'var(--accent-font)' : 'var(--fg-secondary)',
               borderBottom: '1px solid transparent',
             }}
             onMouseEnter={() => setHoveredLink('linkedin')}
@@ -730,7 +732,7 @@ const SpecsContent = ({ compact = false }) => {
             style={{
               ...customStyles.navItem,
               fontSize: compact ? '9px' : '10px',
-              color: hoveredLink === 'github' ? '#1A3FA3' : 'var(--fg-secondary)',
+              color: hoveredLink === 'github' ? 'var(--accent-font)' : 'var(--fg-secondary)',
               borderBottom: '1px solid transparent',
             }}
             onMouseEnter={() => setHoveredLink('github')}
@@ -745,7 +747,7 @@ const SpecsContent = ({ compact = false }) => {
             style={{
               ...customStyles.navItem,
               fontSize: compact ? '9px' : '10px',
-              color: hoveredLink === 'resume' ? '#1A3FA3' : 'var(--fg-secondary)',
+              color: hoveredLink === 'resume' ? 'var(--accent-font)' : 'var(--fg-secondary)',
               borderBottom: '1px solid transparent',
             }}
             onMouseEnter={() => setHoveredLink('resume')}
@@ -758,7 +760,7 @@ const SpecsContent = ({ compact = false }) => {
             style={{
               ...customStyles.navItem,
               fontSize: compact ? '9px' : '10px',
-              color: hoveredLink === 'email' ? '#1A3FA3' : 'var(--fg-secondary)',
+              color: hoveredLink === 'email' ? 'var(--accent-font)' : 'var(--fg-secondary)',
               borderBottom: '1px solid transparent',
             }}
             onMouseEnter={() => setHoveredLink('email')}
@@ -856,7 +858,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
             codeSnippets[0]
           )}
         </div>
-        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '34px' : '48px', lineHeight: 1.1, marginBottom: '24px', color: '#1A3FA3' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '34px' : '48px', lineHeight: 1.1, marginBottom: '24px', color: 'var(--accent-font)' }}>
           Engineering scalable<br />
           <span style={{ color: 'var(--fg-secondary)', fontStyle: 'italic' }}>AI Systems</span> in production.
         </h2>
@@ -868,7 +870,7 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
             style={{
               ...customStyles.btnMinimal,
               background: btnHovered ? '#1A3FA3' : 'transparent',
-              color: btnHovered ? 'var(--on-accent)' : '#1A3FA3',
+              color: btnHovered ? 'var(--on-accent)' : 'var(--accent-font)',
             }}
             onMouseEnter={() => setBtnHovered(true)}
             onMouseLeave={() => setBtnHovered(false)}
@@ -933,11 +935,11 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: isMobile ? '24px 16px' : '32px 24px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '18px' }}>
-            <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+            <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>
               FOCUS_AREAS
             </h3>
-            <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
-              [{focusAreas.length} ITEMS]
+            <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>
+              [{focusAreas.length}_ITEMS]
             </span>
           </div>
           <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0, paddingLeft: '18px', color: 'var(--fg-secondary)' }}>
@@ -950,11 +952,11 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
         </div>
         <div style={{ padding: isMobile ? '24px 16px' : '32px 24px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '18px' }}>
-            <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+            <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>
               IMPACT
             </h3>
-            <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
-              [{impactItems.length} ITEMS]
+            <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>
+              [{impactItems.length}_ITEMS]
             </span>
           </div>
           <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0, paddingLeft: '18px', color: 'var(--fg-secondary)' }}>
@@ -1040,15 +1042,15 @@ const ExperiencePage = ({ isMobile }) => {
   return (
     <main style={isMobile ? customStyles.mobileMain : customStyles.colMain}>
       <section style={{ padding: isMobile ? '28px 16px' : '59px 24px', borderBottom: '1px solid var(--border)' }}>
-        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: 'var(--accent-font)' }}>
           <span style={{ color: 'var(--fg-secondary)', fontStyle: 'italic' }}>Applied</span> Engineering
         </h2>
         <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: 'var(--fg-secondary)' }}>Roles &amp; Production Systems</p>
       </section>
 
       <div style={isMobile ? { ...customStyles.sectionHeader, padding: '16px', position: 'static' } : customStyles.sectionHeader}>
-        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>WORK_HISTORY</h3>
-        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>[{experiences.length} ITEMS]</span>
+        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>WORK_HISTORY</h3>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>[{experiences.length}_ITEMS]</span>
       </div>
 
       {experiences.map((exp, i) => {
@@ -1065,11 +1067,11 @@ const ExperiencePage = ({ isMobile }) => {
                   zIndex: 'auto',
                 }}
               >
-                <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
+                <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>
                   INTERNSHIP_HISTORY
                 </h3>
-                <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>
-                  [{earlierExperienceCount} ITEMS]
+                <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>
+                  [{earlierExperienceCount}_ITEMS]
                 </span>
               </div>
             )}
@@ -1077,14 +1079,14 @@ const ExperiencePage = ({ isMobile }) => {
               <div style={{ ...customStyles.projectHeader, gridTemplateColumns: isMobile ? '32px 1fr' : '40px 1fr auto', gap: isMobile ? '10px' : '16px', padding: isMobile ? '16px' : '24px' }}>
                 <span style={customStyles.projectIndex}>0{i + 1}</span>
                 <div>
-                  <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '19px' : '22px', color: '#1A3FA3', marginBottom: '4px', whiteSpace: isMobile ? 'normal' : 'nowrap' }}>{exp.role}</h3>
+                  <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '19px' : '22px', color: 'var(--accent-font)', marginBottom: '4px', whiteSpace: isMobile ? 'normal' : 'nowrap' }}>{exp.role}</h3>
                   <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '13px', color: 'var(--fg-secondary)' }}>{exp.location ? `${exp.company} · ${exp.location}` : exp.company}</div>
                   {isMobile && (
-                    <span style={{ display: 'inline-block', marginTop: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3' }}>{exp.period}</span>
+                    <span style={{ display: 'inline-block', marginTop: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: 'var(--accent-font)' }}>{exp.period}</span>
                   )}
                 </div>
                 {!isMobile && (
-                  <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3', whiteSpace: 'nowrap' }}>{exp.period}</span>
+                  <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: 'var(--accent-font)', whiteSpace: 'nowrap' }}>{exp.period}</span>
                 )}
               </div>
               <div style={{ ...customStyles.projectBody, padding: isMobile ? '0 16px 16px 16px' : '0 24px 24px calc(56px + 24px)' }}>
@@ -1161,15 +1163,15 @@ const WorkPage = ({ isMobile }) => {
   return (
     <main style={isMobile ? customStyles.mobileMain : customStyles.colMain}>
       <section style={{ padding: isMobile ? '28px 16px' : '59px 24px', borderBottom: '1px solid var(--border)' }}>
-        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: 'var(--accent-font)' }}>
           Project <span style={{ fontStyle: 'italic', color: 'var(--fg-secondary)' }}>Work.</span>
         </h2>
         <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: 'var(--fg-secondary)' }}>Full catalog of selected engineering projects.</p>
       </section>
 
       <div style={isMobile ? { ...customStyles.sectionHeader, padding: '16px', position: 'static' } : customStyles.sectionHeader}>
-        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>ALL_PROJECTS</h3>
-        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>[{projects.length} ITEMS]</span>
+        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>ALL_PROJECTS</h3>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>[{projects.length}_ITEMS]</span>
       </div>
 
       {projects.map((project, i) => (
@@ -1181,7 +1183,7 @@ const WorkPage = ({ isMobile }) => {
           href="https://github.com/DivijShah"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3', textDecoration: 'none' }}
+          style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)', textDecoration: 'none' }}
         >
           VIEW_MORE_ON_GITHUB -&gt;
         </a>
@@ -1213,7 +1215,7 @@ const EducationPage = ({ isMobile }) => {
   return (
     <main style={isMobile ? customStyles.mobileMain : customStyles.colMain}>
       <section style={{ padding: isMobile ? '28px 16px' : '64px 24px', borderBottom: '1px solid var(--border)' }}>
-        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: 'var(--accent-font)' }}>
           Education.
         </h2>
         <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: 'var(--fg-secondary)' }}>
@@ -1222,8 +1224,8 @@ const EducationPage = ({ isMobile }) => {
       </section>
 
       <div style={isMobile ? { ...customStyles.sectionHeader, padding: '16px', position: 'static' } : customStyles.sectionHeader}>
-        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>EDUCATION</h3>
-        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1A3FA3' }}>[{education.length} ITEMS]</span>
+        <h3 style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>EDUCATION</h3>
+        <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-font)' }}>[{education.length}_ITEMS]</span>
       </div>
 
       {education.map((item, i) => (
@@ -1231,7 +1233,7 @@ const EducationPage = ({ isMobile }) => {
           <div style={{ ...customStyles.projectHeader, gridTemplateColumns: isMobile ? '32px 1fr' : '80px 1fr auto', padding: isMobile ? '16px' : '24px', gap: isMobile ? '10px' : '24px' }}>
             <span style={customStyles.projectIndex}>0{i + 1}</span>
             <div>
-              <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '19px' : '22px', color: '#1A3FA3', marginBottom: '4px' }}>{item.degree}</h3>
+              <h3 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '19px' : '22px', color: 'var(--accent-font)', marginBottom: '4px' }}>{item.degree}</h3>
               {item.university && (
                 <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--fg-secondary)', marginBottom: '4px' }}>{item.university}</div>
               )}
@@ -1239,11 +1241,11 @@ const EducationPage = ({ isMobile }) => {
                 <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '13px', color: 'var(--fg-secondary)' }}>{item.subtitle}</div>
               )}
               {isMobile && (
-                <span style={{ display: 'inline-block', marginTop: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3' }}>{item.period}</span>
+                <span style={{ display: 'inline-block', marginTop: '8px', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: 'var(--accent-font)' }}>{item.period}</span>
               )}
             </div>
             {!isMobile && (
-              <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: '#1A3FA3', whiteSpace: 'nowrap' }}>{item.period}</span>
+              <span style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid var(--border)', padding: '2px 6px', color: 'var(--accent-font)', whiteSpace: 'nowrap' }}>{item.period}</span>
             )}
           </div>
           <div style={isMobile ? { ...customStyles.projectBody, padding: '0 16px 16px 16px' } : customStyles.projectBody}>
@@ -1274,7 +1276,7 @@ const BeyondCodePage = ({ isMobile }) => {
   return (
     <main style={isMobile ? customStyles.mobileMain : { ...customStyles.colMain, boxShadow: 'inset 0 -4px 0 #1A3FA3' }}>
       <section style={{ padding: isMobile ? '28px 16px' : '64px 24px', borderBottom: '1px solid var(--border)' }}>
-        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: '#1A3FA3' }}>
+        <h2 style={{ fontFamily: '"Playfair Display", "Times New Roman", serif', fontWeight: 400, fontSize: isMobile ? '36px' : '50px', lineHeight: 1.1, marginBottom: '16px', color: 'var(--accent-font)' }}>
           Beyond <span style={{ fontStyle: 'italic', color: 'var(--fg-secondary)' }}>Code.</span>
         </h2>
         <p style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '14px', color: 'var(--fg-secondary)' }}>More about me.</p>
@@ -1284,13 +1286,13 @@ const BeyondCodePage = ({ isMobile }) => {
           I build systems, but I leave room for spontaneity.
         </p>
         <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
-          I spend an unreasonable amount of time analyzing <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Soccer</span> - formations, movement, underlying stats. Some people watch games. I run mental models. (Yes, <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Manchester United</span> is always involved.)
+          I spend an unreasonable amount of time analyzing <span style={{ color: 'var(--accent-font)', fontStyle: 'italic' }}>Soccer</span> - formations, movement, underlying stats. Some people watch games. I run mental models. (Yes, <span style={{ color: 'var(--accent-font)', fontStyle: 'italic' }}>Manchester United</span> is always involved.)
         </p>
         <p style={{ margin: '0 0 14px 0', maxWidth: '780px', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
-          <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Swimming</span> came before code. I even became a <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Certified Lifeguard</span>. Staying calm when someone&apos;s flailing in the deep end is great practice for when a deploy goes sideways.
+          <span style={{ color: 'var(--accent-font)', fontStyle: 'italic' }}>Swimming</span> came before code. I even became a <span style={{ color: 'var(--accent-font)', fontStyle: 'italic' }}>Certified Lifeguard</span>. Staying calm when someone&apos;s flailing in the deep end is great practice for when a deploy goes sideways.
         </p>
         <p style={{ margin: 0, maxWidth: '780px', color: 'var(--fg-secondary)', fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '15px', lineHeight: 1.6 }}>
-          <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Hiking</span> helps me zoom out. <span style={{ color: '#1A3FA3', fontStyle: 'italic' }}>Photography</span> forces me to zoom in. Both are great reminders that perspective matters in life and in systems.
+          <span style={{ color: 'var(--accent-font)', fontStyle: 'italic' }}>Hiking</span> helps me zoom out. <span style={{ color: 'var(--accent-font)', fontStyle: 'italic' }}>Photography</span> forces me to zoom in. Both are great reminders that perspective matters in life and in systems.
         </p>
       </section>
     </main>
@@ -1449,7 +1451,7 @@ const App = () => {
             />
             <aside style={customStyles.mobileSpecsPanel}>
               <div style={customStyles.mobileSpecsHead}>
-                <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#1A3FA3' }}>
+                <div style={{ fontFamily: '"JetBrains Mono", "Courier New", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--accent-font)' }}>
                   Specs Panel
                 </div>
                 <button
