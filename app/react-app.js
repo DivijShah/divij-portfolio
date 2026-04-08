@@ -976,10 +976,23 @@ const IndexPage = ({ setActiveNav, isMobile, isHydrated }) => {
 const ExperiencePage = ({ isMobile }) => {
   const experiences = [
     {
+      role: 'Founding AI Engineer',
+      company: 'SWIPE HEALTH',
+      period: 'Apr 2026 – Present',
+      location: 'Austin, TX',
+      description: 'Built the complete AI intelligence and adaptive training layer for a fitness app converting wearable biometrics into personalized daily workouts',
+      points: [
+        'Architected 24 production-ready engines from a 66-page architecture spec covering adaptive training, AI coaching, and safety systems',
+        'Designed progressive overload, plateau detection, deload scheduling, and readiness-based session modification pipelines',
+        'Built three-layer AI coach with motivational interviewing, physiological tone modulation, and retention-driven personalization',
+        'Engineered wearable data pipeline with HRV methodology, iOS Live Activity integration, and 150+ edge-case validations',
+      ],
+      tags: ['JavaScript', 'React Native', 'Swift', 'Anthropic Claude API', 'Spike API', 'iOS ActivityKit'],
+    },
+    {
       role: 'Founding Full Stack AI Engineer',
       company: 'ASTER INC',
-      period: 'Jul 2025 – Present',
-      location: 'Austin, TX',
+      period: 'Jul 2025 – Mar 2026',
       description: 'Built and scaled a production AI platform serving 10K+ monthly users.',
       points: [
         'Owned end to end architecture across frontend, backend, and inference systems',
@@ -1036,7 +1049,7 @@ const ExperiencePage = ({ isMobile }) => {
       showTags: false,
     },
   ];
-  const earlierExperienceStart = 3;
+  const earlierExperienceStart = 4;
   const earlierExperienceCount = Math.max(0, experiences.length - earlierExperienceStart);
 
   return (
